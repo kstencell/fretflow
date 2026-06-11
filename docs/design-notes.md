@@ -132,10 +132,10 @@ judgment calls.
 
 - **Phase 0 — scaffold:** Vite + React + TS + Tailwind + Vitest; CI-free, just
   `dev`/`build`/`test`. Define core TypeScript types (Note, Key, Chord, Progression,
-  Shape, FretboardPosition) — these are the spec.
+  Shape, FretboardPosition) — these are the spec. ✅
 - **Phase 1 — theory: notes + scales + diatonic chords.** TDD against known key
-  signatures and diatonic triads.
-- **Phase 2 — theory: progression templates → concrete chords.** TDD.
+  signatures and diatonic triads. ✅ (`notes.ts` + `chords.ts`, 8 tests)
+- **Phase 2 — theory: progression templates → concrete chords.** TDD. ✅ (`realizeProgression` in `progressions.ts`, 2 tests)
 - **Phase 3 — theory: CAGED shapes + region mapping + fretboard positions.** Heaviest
   testing. Human verification pass.
 - **Phase 4 — UI: selectors + generate + progression list.** Wire to core.

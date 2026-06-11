@@ -1,4 +1,19 @@
-import type { ProgressionTemplate } from "./types";
+import type { Key, Progression, ProgressionTemplate } from "./types";
+import { getDiatonicChords } from "./chords";
+
+const NUMERAL_TO_DEGREE: Record<string, number> = {
+  I: 0, II: 1, III: 2, IV: 3, V: 4, VI: 5, VII: 6,
+};
+
+function numeralToDegree(numeral: string): number {
+  return NUMERAL_TO_DEGREE[numeral.toUpperCase().replace('°', '')];
+}
+
+export function realizeProgression(template: ProgressionTemplate, key: Key): Progression {
+  const diatonic = getDiatonicChords(key);
+  const chords = template.numerals.map(n => diatonic[numeralToDegree(n)]) as Progression['chords'];
+  return { key, template, chords };
+}
 
 export const PROGRESSION_TEMPLATES: ProgressionTemplate[] = [
   {

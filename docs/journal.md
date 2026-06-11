@@ -181,3 +181,27 @@ coding to a cheaper model.
 - `Shape` and `FretboardPosition` blocked on CAGED gate — resolve before Phase 3.
 - Progressions catalog is a draft; genre tags and selection should be verified against a guitar.
 - Next: Phase 1 — TDD for notes/scales/diatonic chords. Start with the test table for pitch-class ↔ name mapping.
+
+## 2026-06-11 — Phases 1 & 2: theory core TDD
+
+**Focus:** Implement and test the deterministic theory core: note spelling, diatonic chords, and progression realization.
+
+**Decisions:**
+- `getKeyNotes` spells notes by walking letter names (A–G) from the tonic and computing accidentals from the difference between the required pitch class and the letter's natural pitch class. Handles sharps and flats; double accidentals not needed for standard major/natural-minor keys.
+- `getDiatonicChords` delegates note spelling to `getKeyNotes`, then zips with a fixed quality array per mode. Quality arrays are the music theory encoded as data.
+- `realizeProgression` parses Roman numerals by uppercasing + stripping `°`, then indexing into `getDiatonicChords`. Returns a full `Progression` (key + template + chords).
+- `sanity.test.ts` left in place — will be deleted when it becomes a nuisance (agreed earlier).
+
+**Done:**
+- `src/theory/notes.ts` — `getKeyNotes(key: Key): Note[]`; enharmonic spelling via letter-walk + pitch-class diff.
+- `src/theory/notes.test.ts` — 5 cases: C major, G major (F#), F major (B♭), A natural minor, E natural minor.
+- `src/theory/chords.ts` — `getDiatonicChords(key: Key): Chord[]`; fixed quality arrays for major and natural minor.
+- `src/theory/chords.test.ts` — 3 cases: C major, G major, A natural minor.
+- `src/theory/progressions.ts` — added `realizeProgression(template, key): Progression`; `PROGRESSION_TEMPLATES` catalog unchanged.
+- `src/theory/progressions.test.ts` — 2 cases: Axis of Awesome in C major, Minor Anthem in A natural minor.
+- All 11 tests passing (plus sanity).
+
+**Open threads:**
+- Phase 3 (CAGED shapes + region mapping) is the ⛔ gate — needs CAGED data model discussion with Karl before any code.
+- `sanity.test.ts` still present; delete when first test file makes it redundant (already redundant now — Karl's call).
+- Progressions catalog still a draft; verify genre tags + chord choices against a real guitar.
