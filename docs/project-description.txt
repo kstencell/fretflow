@@ -1,0 +1,29 @@
+# FretFlow — Project Description
+
+FretFlow is a visual guitar practice generator built around the CAGED system. The goal is to turn guitar theory into short, playable practice loops that help a guitarist move around the neck with intention instead of defaulting to the same few open chords or pentatonic boxes.
+
+The core idea is simple: the user picks a key, a neck region, and a practice vibe, then the app generates a chord progression and maps each chord to a suggested CAGED shape on the fretboard. Instead of only saying “play G → Em → C → D,” the app gives a route through the neck: for example, “play G as an E-shape around the 3rd fret, Em as an Am-shape around the 7th fret, C as an A-shape around the 3rd fret, and D as a C-shape around the 2nd fret.” The point is not just to learn chords, but to practice connecting chord shapes across the guitar neck.
+
+The project solves a real problem I care about. Guitar practice can fall into two bad modes: boring theory drills that feel disconnected from music, or aimless noodling that feels fun but does not build much structure. FretFlow tries to sit in the middle. It gives enough theory to be useful, enough randomness to stay fresh, and enough visual feedback to make the fretboard feel less abstract.
+
+The first version is deterministic. It includes a small library of common progression types such as pop, folk, blues, minor, and random practice loops. The user can select a key and a fretboard zone, then the app generates a progression and displays the suggested chord shapes visually. This deterministic layer is important because the app should not rely on an AI model to know whether a chord shape is actually playable or theoretically valid. The application owns the music-theory rules and the fretboard mapping.
+
+The AI feature is an optional creative layer on top of that deterministic core. A user can type something like “I’m feeling bluesy today,” “give me something Ed Sheeran-ish,” “melancholy indie folk,” or “funky rhythm guitar practice.” The app then uses the user’s API key to ask an AI model for a loose stylistic suggestion: a vibe, a progression type, chord qualities, and practice notes. The AI does not directly control the fretboard truth. Instead, it suggests musical intent, and FretFlow resolves that intent into real chords, CAGED shapes, and playable fretboard positions.
+
+That separation is a key design decision. AI is good at taste, variation, and inspiration, but it can hallucinate concrete theory details or invent awkward shapes. FretFlow uses AI for creative direction, while keeping chord resolution, shape mapping, validation, and rendering deterministic. If the AI returns something invalid or unsupported, the app can fall back to a known-good generated progression.
+
+A typical user flow looks like this:
+
+1. The user chooses a key, such as G major or A minor.
+2. The user selects a fretboard region, such as open position, frets 3–7, frets 5–9, or the full neck.
+3. The user picks a vibe or enters a freeform style prompt.
+4. FretFlow generates a short practice progression.
+5. The app maps each chord to a CAGED shape in the selected neck region.
+6. The user sees a visual fretboard with highlighted roots, chord tones, shape names, and movement hints.
+7. The user can save the progression as a practice loop or regenerate a new one.
+
+The intended experience is not a rigid guitar lesson app. It is closer to a creative practice companion. It should answer the question: “What should I practice for the next ten minutes?” The result should be structured enough to teach something, but musical enough to actually want to play.
+
+For the take-home assessment, the scope is deliberately small. The minimum complete version should include a clean UI, a key selector, a neck-region selector, deterministic progression generation, basic CAGED shape mapping, and a fretboard visualization. The AI feature can be added as a stretch goal using a user-provided API key, with clear validation and fallback behavior.
+
+With more time, FretFlow could expand into saved practice history, difficulty progression, scale overlays, chord-tone targeting, backing-track generation, user-authored exercises, and import from favorite songs. But the core product should stay focused: turn musical inspiration into playable movement across the neck.
