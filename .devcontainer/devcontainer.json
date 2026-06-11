@@ -4,7 +4,7 @@
 
   "forwardPorts": [5173],
   "portsAttributes": {
-    "5173": { "label": "Vite dev server", "onAutoForward": "openBrowser" }
+    "5173": { "label": "Vite dev server" }
   },
 
   "postCreateCommand": "if [ -f package.json ]; then npm install; fi",

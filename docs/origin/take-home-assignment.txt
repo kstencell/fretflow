@@ -1,0 +1,67 @@
+Assignment
+Software Engineer/Forward Deployed Engineer: Take-Home Assessment
+
+
+Thanks for your interest in working with Origin. Before the technical interview, we ask candidates to complete a short take-home assessment. This document explains what we're looking for and how to submit.
+
+
+Goal: build a functional software tool that solves a real problem, one you actually care about, using the same tools and approach you would use on the job.
+
+Task: pick a problem, pick your tools, decide what “done” looks like. Use AI tools (Claude Code, Codex, Cursor, etc.) throughout for planning, writing code, debugging, whatever you find useful.
+
+
+The why
+
+Our engineers use AI tools daily not as a novelty, but as a core part of how we build. This exercise is designed to reflect that reality. We want to see your actual workflow: how you scope a problem, how you interact with AI output, where you push back on it, and how you shape the result into something you’re satisfied with.
+
+
+The challenge
+
+A few things we’re looking for:
+
+    The problem should be real: a tool you’d actually use, an annoyance you’d actually want fixed. The best submissions come from candidates who picked something they were personally motivated by.
+
+    The scope should be small but deliberate. This is a 4 - 8 hour project. A well-scoped, finished tool beats an ambitious one that’s half-done.
+
+    Use AI as much as you want. There’s no restriction on which tools or how you use them. We want your real workflow.
+
+    Don’t just accept the first thing the AI gives you. We’re interested in how you interact with AI output and whether you iterate, push back, catch mistakes, and shape the result.
+
+
+What to submit
+
+Two things:
+
+    Your project. A working codebase. A GitHub repo is easiest but a zip works too. It should run, or be close enough that we can follow what’s going on.
+
+    A short write-up. A few paragraphs that cover:
+
+        what problem you chose and why it interested you
+
+        how you used AI and what worked or didn’t
+
+        where the AI got things wrong and how you dealt with it
+
+        what you’d improve with more time
+
+        any limitations/rough edges you’re aware of
+
+
+Be honest - we’d rather hear “this part is janky because I ran out of time” than read a polished pitch for code we can see ourselves.
+
+
+What happens next
+
+Your submission is the basis for the technical interview. The hiring manager will review what you built, and the conversation will focus on your project, your choices, and your process. We may ask you to extend or modify something live, so be comfortable enough with your code to work in it. We’re not trying to catch you off guard,  we want a real conversation about the problem you solved.
+
+
+Logistics
+
+    Expected effort: 4- 8 hours.
+
+    Submission window: 3- 5 days from receipt. If you need more time for scheduling reasons, let us know.
+
+    How to submit: send your project link and write-up to the submission link in the initial email.
+
+
+Note: This exercise is intentionally open-ended. There’s no spec to follow and no single right answer. That’s by design,  we care about the choices you make and the thinking behind them. If you have clarifying questions, we’re happy to answer them. You’re also welcome to make reasonable assumptions; just document them and explain how they shaped your approach.

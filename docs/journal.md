@@ -122,3 +122,20 @@ coding to a cheaper model.
 - Still unbuilt: `docs/ai-usage.md` renderer (persisted ledger) and wiring a usage
   step into the clean-up skill.
 - Checklist granularity is a proposal — split any item that's too big for the executor.
+
+## 2026-06-11 — Devcontainer setup
+
+**Focus:** Add a devcontainer so both Karl and the Origin EM can develop/run the project without polluting their host environments.
+
+**Decisions:**
+- Devcontainer is for **everyone** (Karl included) — no Node deps on the host; everything runs inside the container.
+- Used Microsoft's pre-built `javascript-node:20` image — no custom Dockerfile needed, it ships with git + npm + common tools.
+- `postCreateCommand` is conditional (`if [ -f package.json ]`) so the container works now and auto-installs deps once the Vite scaffold lands in Phase 0.
+- Claude Code (skills, Python scripts) runs on the host natively — the devcontainer has no bearing on it.
+- `.claude/` stays committed intentionally: the Origin assignment evaluates AI tool usage, and that's the evidence trail.
+
+**Done:**
+- `.devcontainer/devcontainer.json` — Node 20 devcontainer; forwards port 5173 (Vite); VS Code extensions: Tailwind IntelliSense, Prettier, Vitest explorer.
+
+**Open threads:**
+- Phase 0 scaffold (Vite + React + TS) is the agreed next step — once `package.json` exists, the devcontainer's `postCreateCommand` becomes live.
