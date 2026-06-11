@@ -1,0 +1,21 @@
+{
+  "name": "FretFlow",
+  "image": "mcr.microsoft.com/devcontainers/javascript-node:20",
+
+  "forwardPorts": [5173],
+  "portsAttributes": {
+    "5173": { "label": "Vite dev server", "onAutoForward": "openBrowser" }
+  },
+
+  "postCreateCommand": "if [ -f package.json ]; then npm install; fi",
+
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "bradlc.vscode-tailwindcss",
+        "esbenp.prettier-vscode",
+        "vitest.explorer"
+      ]
+    }
+  }
+}
