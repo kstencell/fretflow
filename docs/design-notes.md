@@ -122,6 +122,9 @@ right-sized model, not reflexively reaching for the biggest one.
 
 ## 6. Execution plan (sized for simpler executor models)
 
+> The actionable, checkbox version of this lives in `docs/plan.md` — this section is
+> the rationale; that file is the do-list the executor model works through.
+
 Principle: define **type contracts first**, then implement each module behind them.
 The theory core has objective right answers → **TDD**: write the table of expected
 outputs (known keys/chords/shapes) before implementing. This makes each task
@@ -216,5 +219,11 @@ was *active* at each message's timestamp. The active bucket is set by **marks**.
   (`/home/karl/repos/fretflow` → `-home-karl-repos-fretflow`). Reusing a folder name for
   a different project mixes their logs together — purge stale transcripts/memories when
   restarting fresh (done once already, June 11).
-- Not built yet: the mark-writing mechanism, the persisted `docs/ai-usage.md` ledger,
-  and a usage step wired into the clean-up skill.
+- `mark.py` (in the clean-up skill) is the mark writer: `mark.py <bucket> [note...]`
+  auto-stamps `ts` (UTC now), enum-validates the bucket, appends one record. Hand-edits
+  to the marks file are still fair game for fixing/retconning boundaries (done once —
+  the whole 2026-06-11 planning session was retconned to `planning-docs`).
+- The clean-up skill's **Step 0** reconstructs the conversation's marks from hindsight
+  (then marks the clean-up work itself `planning-docs`) — the reliable place to set
+  boundaries, since live marking gets forgotten.
+- Not built yet: the persisted `docs/ai-usage.md` ledger (renderer + rollup).

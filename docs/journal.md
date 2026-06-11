@@ -75,3 +75,50 @@ Origin-flavored angle). Still no app code; this is tooling.
   wiring a usage step into the clean-up skill itself.
 - Gotcha to remember: transcript dir is **path-keyed** — reusing `~/repos/fretflow` for
   a future project will re-contaminate usage totals.
+
+## 2026-06-11 — Mark mechanism + build checklist
+
+**Focus:** Finish the usage-tracking writer (drop marks so work stops landing in
+`unattributed`), then turn the plan into an executor-ready checklist for handing the
+coding to a cheaper model.
+
+**Decisions:**
+- Marks are written by a **tiny script** (`mark.py`), not a `/mark` skill or raw
+  append — chosen so `ts` is auto-stamped (UTC now, lines up with transcripts) and the
+  bucket is enum-validated (a typo can't silently misattribute). Callable by Claude via
+  Bash and by Karl by hand.
+- **Retconned the whole session so far to `planning-docs`** via a hand-inserted mark at
+  `2026-06-11T17:50:09Z` (at-or-before the earliest message). Honest: it's all been
+  planning + meta-tooling, zero app code. Hand-editing the marks file for boundary
+  fixes is the §9-sanctioned path.
+- Build checklist rulings: lives in **new `docs/plan.md`**; the one-baby-step +
+  check-in agreement **carries over to the cheaper coding model** (CLAUDE.md still
+  governs); checklist kept **pure of mark commands** (one §9 reminder only); **CAGED
+  data model is left as an explicit ⛔ gate** to nail down later, not decided now.
+
+**Done:**
+- `.claude/skills/clean-up/mark.py` — appends `{ts, bucket, note?}` to
+  `docs/ai-usage.marks.jsonl`; auto-stamps UTC ts, validates bucket against the six-value
+  enum, omits empty notes, `mkdir -p`s the docs dir. Mirrors `usage_report.py`'s path/
+  constant conventions so writer and reader agree on the contract.
+- `docs/ai-usage.marks.jsonl` — created; now holds 2 marks (the 17:50:09Z retcon +
+  a 19:29:28Z `mark.py` test), both `planning-docs`. `usage_report.py` re-run confirms
+  `unattributed` is gone — whole session (~17.3M tokens / ~$20.6, ~94% cache/context)
+  attributes to `planning-docs`.
+- `docs/plan.md` — new build checklist: preamble enforces baby-steps + TDD (test table
+  is its own box before the impl box), CAGED hoisted as a ⛔ gate blocking `Shape`/
+  `FretboardPosition` types and all of Phase 3, phases mirror design-notes §6 (+0.5 for
+  type contracts), stretch/ship gated and last.
+- `.claude/skills/clean-up/SKILL.md` — added **Step 0: reconstruct usage marks**.
+  Clean-up now lays down the conversation's bucket boundaries from hindsight (the
+  reliable place to do it, vs. hoping marks were dropped live), then marks the clean-up
+  doc work itself as `planning-docs` last.
+
+**Open threads:**
+- **Next step (agreed): settle the CAGED data model** — the ⛔ gate in `docs/plan.md`.
+  This is the SME-heavy, error-prone part (§5); do it while on this model with Karl
+  driving, before handing coding to the cheaper executor. Decide the data shape
+  (offsets per string, root string, chord-tone roles) and who authors/verifies it.
+- Still unbuilt: `docs/ai-usage.md` renderer (persisted ledger) and wiring a usage
+  step into the clean-up skill.
+- Checklist granularity is a proposal — split any item that's too big for the executor.

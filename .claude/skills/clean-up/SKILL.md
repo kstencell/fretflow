@@ -9,8 +9,26 @@ Purpose: stop an ever-growing conversation from burning tokens. Capture what
 happened, update the docs so the repo is the source of truth (not the chat), and
 hand a clean baton to the next conversation.
 
-Run these three steps **in order**. Do them yourself in the main conversation — do
+Run these steps **in order**. Do them yourself in the main conversation — do
 not spawn agents. Keep it tight; this is bookkeeping, not new feature work.
+
+## Step 0 — Reconstruct usage marks
+
+You have hindsight of the whole conversation now — use it to lay down the bucket
+boundaries that should have been marked live. Two parts:
+
+1. **The conversation's work.** It may span several buckets (`planning-docs`,
+   `scaffolding`, `app-logic`, `ui`, `testing`, `debugging`). For each shift that
+   actually happened, drop a mark at roughly when it happened, in order. `mark.py`
+   stamps `ts` as *now* (no backdate flag), so to place an earlier boundary, append
+   the JSONL line by hand with the right `ts` — order matters, not exact seconds. Skip
+   any boundary already marked live during the conversation.
+2. **Clean-up itself is `planning-docs`** (this journaling/doc work). Mark it last so
+   the bookkeeping tail attributes correctly:
+
+```
+python3 .claude/skills/clean-up/mark.py planning-docs "clean-up"
+```
 
 ## Step 1 — Append a journal entry
 
