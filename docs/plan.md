@@ -31,17 +31,17 @@
 
 ## Phase 0 — Scaffold
 
-- [ ] Init Vite + React + TS; `npm run dev` serves a blank page.
-- [ ] Add Tailwind; a styled element renders.
-- [ ] Add Vitest; a trivial test runs green.
-- [ ] Confirm `dev` / `build` / `test` scripts all work.
+- [x] Init Vite + React + TS; `npm run dev` serves a blank page.
+- [x] Add Tailwind; a styled element renders.
+- [x] Add Vitest; a trivial test runs green.
+- [x] Confirm `dev` / `build` / `test` scripts all work.
 
 ## Phase 0.5 — Core type contracts (the spec)
 
-- [ ] `Note` / pitch-class representation (12 pitch classes; enharmonic spelling).
-- [ ] `Key` (tonic + mode: `major` | `natural-minor`).
-- [ ] `Chord` (root + quality: major / minor / diminished triad).
-- [ ] `Progression` (key + ordered chords + template name).
+- [x] `Note` / pitch-class representation (12 pitch classes; enharmonic spelling).
+- [x] `Key` (tonic + mode: `major` | `natural-minor`).
+- [x] `Chord` (root + quality: major / minor / diminished triad).
+- [x] `Progression` (key + 4-chord tuple + `ProgressionTemplate` object). Also: `Genre`, `ProgressionTemplate` catalog in `src/theory/progressions.ts`.
 - [ ] *(blocked by the CAGED gate)* `Shape` — CAGED shape template.
 - [ ] *(blocked by the CAGED gate)* `FretboardPosition` — string, fret, note, role.
 

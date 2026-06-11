@@ -139,3 +139,45 @@ coding to a cheaper model.
 
 **Open threads:**
 - Phase 0 scaffold (Vite + React + TS) is the agreed next step — once `package.json` exists, the devcontainer's `postCreateCommand` becomes live.
+
+## 2026-06-11 — Phase 0 scaffold complete
+
+**Focus:** Install and verify the full Vite + React + TS + Tailwind + Vitest stack.
+
+**Decisions:**
+- Vite config needs `server: { host: true }` in a devcontainer — default binds to loopback only, which port-forwarding can't reach.
+- Import `defineConfig` from `'vitest/config'` (not `'vite'`) — the `/// <reference types="vitest" />` directive doesn't survive `tsc -b` cleanly; Vitest's own `defineConfig` re-export has the `test:` key built into its types.
+- Tailwind v4: no `tailwind.config.js` needed; single `@import "tailwindcss"` in the CSS file plus the `@tailwindcss/vite` plugin is the complete setup.
+- Vitest environment: `'node'` (correct for pure theory-core functions; `'jsdom'` only needed if/when we add component tests).
+
+**Done:**
+- `vite.config.ts` — Vite + React + Tailwind + Vitest config; `host: true` for devcontainer; `defineConfig` from `vitest/config`.
+- `src/index.css` — `@import "tailwindcss"` prepended; Tailwind utility classes verified working.
+- `package.json` — `"test": "vitest"` script added; `tailwindcss`, `@tailwindcss/vite`, `vitest` in devDependencies.
+- `src/sanity.test.ts` — trivial passing test confirming Vitest wiring; to be deleted when first real theory test lands.
+- All three scripts verified: `dev` serves app, `build` compiles clean, `test` runs green.
+- Committed and pushed.
+
+**Open threads:**
+- Next: Phase 0.5 type contracts (`Note`, `Key`, `Chord`, `Progression`) — the unblocked four. `Shape` and `FretboardPosition` still blocked on the CAGED gate.
+- `src/sanity.test.ts` should be deleted once the first real theory test is written.
+
+## 2026-06-11 — Phase 0.5 type contracts
+
+**Focus:** Define the core TypeScript types that serve as the spec for the theory core.
+
+**Decisions:**
+- `ProgressionTemplate` is a data object (`id`, `label`, `numerals`, `genres`), not a genre-name enum — genre labels don't map 1:1 to progressions, and the catalog approach lets multiple genres tag the same progression.
+- Scope locked to **4-chord progressions only** — the app is a practice tool for common 4-chord CAGED patterns, not a general sequencer. Enforced as a 4-tuple in the type.
+- `Genre` is a string union (`pop | rock | country | folk | blues | minor`); a template can belong to multiple genres via `genres: Genre[]`.
+- `random` template removed — random means "pick randomly from the catalog at runtime," not a distinct template type.
+- `Shape` and `FretboardPosition` remain blocked on the CAGED gate.
+
+**Done:**
+- `src/theory/types.ts` — `Note`, `Mode`, `Key`, `ChordQuality`, `Chord`, `Genre`, `ProgressionTemplate`, `Progression`.
+- `src/theory/progressions.ts` — `PROGRESSION_TEMPLATES`: 7 common 4-chord progressions with genre tags (Axis of Awesome, 50s Changes, Three-Chord Classic, Pop Standard, Minor Anthem, Minor Rock, Natural Minor Loop). Acknowledged as a draft to be verified/tweaked later.
+
+**Open threads:**
+- `Shape` and `FretboardPosition` blocked on CAGED gate — resolve before Phase 3.
+- Progressions catalog is a draft; genre tags and selection should be verified against a guitar.
+- Next: Phase 1 — TDD for notes/scales/diatonic chords. Start with the test table for pitch-class ↔ name mapping.

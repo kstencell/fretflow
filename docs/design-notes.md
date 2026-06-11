@@ -65,8 +65,7 @@ right-sized model, not reflexively reaching for the biggest one.
 
 - **notes** — 12 pitch classes, enharmonic spelling per key.
 - **keys/scales** — major + natural minor. Diatonic triads with qualities.
-- **progressions** — named Roman-numeral templates (pop `I–V–vi–IV`, folk, blues,
-  minor `i–VI–III–VII`, random). Template → concrete chords in a key.
+- **progressions** — catalog of named 4-chord Roman-numeral templates (`src/theory/progressions.ts`), each tagged with one or more genres. Template → concrete chords in a key.
 - **caged** — the 5 movable shapes (C, A, G, E, D) as templates: relative fret
   offsets per string, root string, chord-tone roles. Map a chord → a CAGED shape
   that lands inside the selected neck region.
@@ -154,6 +153,9 @@ Each phase = a legible commit (or few). Keep history clean — it's graded evide
 - **Stack:** static SPA, no backend. BYO-key, client-side Anthropic call. ✅
 - **Theory scope:** major + natural minor, **triads only**. No harmonic minor, no
   7ths in v1. Minor progressions stay diatonic to natural minor (`v`, not `V`). ✅
+- **Progressions:** fixed catalog of **4-chord templates only**. Genre is a multi-value
+  tag on each template (not a 1:1 identifier). No `random` template type — random
+  means pick randomly from the catalog at runtime. ✅
 - **AI vibe layer:** strictly a **stretch** — deterministic app ships complete and
   fully usable with no key entered; AI added only if time remains. ✅
 

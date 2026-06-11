@@ -4,3 +4,8 @@
 {"ts": "2026-06-11T20:10:00Z", "bucket": "planning-docs", "note": "project orientation, devcontainer scope discussion"}
 {"ts": "2026-06-11T20:20:00Z", "bucket": "scaffolding", "note": "devcontainer setup"}
 {"ts": "2026-06-11T20:41:01Z", "bucket": "planning-docs", "note": "clean-up"}
+{"ts": "2026-06-11T20:42:00Z", "bucket": "scaffolding", "note": "vite scaffold + tailwind + vitest setup"}
+{"ts": "2026-06-11T21:05:00Z", "bucket": "debugging", "note": "build error: vitest/config import fix"}
+{"ts": "2026-06-11T21:15:12Z", "bucket": "planning-docs", "note": "clean-up"}
+{"ts": "2026-06-11T21:20:00Z", "bucket": "app-logic", "note": "Phase 0.5 type contracts: Note, Key, Chord, Progression + progressions catalog"}
+{"ts": "2026-06-11T23:09:51Z", "bucket": "planning-docs", "note": "clean-up"}
