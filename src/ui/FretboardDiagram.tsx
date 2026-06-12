@@ -22,9 +22,10 @@ const ROLE_COLORS: Record<ChordToneRole, { fill: string; text: string }> = {
 
 interface Props {
   placedShape: PlacedShape;
+  showLabel?: boolean;
 }
 
-export function FretboardDiagram({ placedShape }: Props) {
+export function FretboardDiagram({ placedShape, showLabel = true }: Props) {
   const { chord, shape, positions } = placedShape;
 
   const nonOpenFrets = positions.filter(p => p.fret > 0).map(p => p.fret);
@@ -56,11 +57,15 @@ export function FretboardDiagram({ placedShape }: Props) {
 
   return (
     <div className="flex flex-col items-center gap-1">
-      <span className="text-sm font-semibold text-white tracking-wide">
-        {chord.root.name}{' '}
-        <span className="text-zinc-400 font-normal">{chord.quality}</span>
-      </span>
-      <span className="text-[11px] text-zinc-600 font-mono">{shape.name} shape</span>
+      {showLabel && (
+        <>
+          <span className="text-sm font-semibold text-white tracking-wide">
+            {chord.root.name}{' '}
+            <span className="text-zinc-400 font-normal">{chord.quality}</span>
+          </span>
+          <span className="text-[11px] text-zinc-600 font-mono">{shape.name} shape</span>
+        </>
+      )}
 
       <svg width={svgW} height={svgH} viewBox={`0 0 ${svgW} ${svgH}`}>
         {/* Fretboard background */}

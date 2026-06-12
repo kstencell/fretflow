@@ -27,3 +27,12 @@
 {"ts": "2026-06-12T23:00:00Z", "bucket": "ui", "note": "FretboardDiagram SVG component + VerificationPage + App wiring"}
 {"ts": "2026-06-12T23:50:00Z", "bucket": "app-logic", "note": "placeShape fret-wrap fix + root-at-12 constraint"}
 {"ts": "2026-06-12T03:52:04Z", "bucket": "planning-docs", "note": "clean-up"}
+{"ts": "2026-06-12T20:00:00Z", "bucket": "ui", "note": "routing setup, hero section, light theme, font/spacing tweaks"}
+{"ts": "2026-06-12T14:55:25Z", "bucket": "planning-docs", "note": "clean-up"}
+{"ts": "2026-06-12T15:00:00Z", "bucket": "ui", "note": "CAGED explainer section, KeySelector, ProgressionSelector, Generate + fretboard diagrams, footer"}
+{"ts": "2026-06-12T17:30:00Z", "bucket": "debugging", "note": "duplicate import error fix (FretboardDiagram, placeShape, CAGED_SHAPES)"}
+{"ts": "2026-06-12T17:35:00Z", "bucket": "ui", "note": "font swap Syne → Space Grotesk; screenshots to verify"}
+{"ts": "2026-06-12T15:53:03Z", "bucket": "planning-docs", "note": "clean-up"}
+{"ts": "2026-06-12T16:00:00Z", "bucket": "planning-docs", "note": "full-neck UI redesign discussion — orientation, colours, buttons"}
+{"ts": "2026-06-12T16:30:00Z", "bucket": "ui", "note": "FullNeckDiagram: skeleton, dot overlay, chord buttons, page wiring, responsive orientation"}
+{"ts": "2026-06-12T17:26:06Z", "bucket": "planning-docs", "note": "clean-up"}

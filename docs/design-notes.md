@@ -138,8 +138,9 @@ judgment calls.
   signatures and diatonic triads. ✅ (`notes.ts` + `chords.ts`, 8 tests)
 - **Phase 2 — theory: progression templates → concrete chords.** TDD. ✅ (`realizeProgression` in `progressions.ts`, 2 tests)
 - **Phase 3 — theory: CAGED shapes + fretboard positions.** Heaviest testing. Human verification pass. ✅ (`fretboard.ts`, `shapes.ts`, `placement.ts`; 42 tests. Region filtering deferred to stretch.) Placement extended post-session: fret wrapping via `getNoteAt(% 12)`, root scan to fret 12, root-at-12 guard.
-- **Phase 4 — UI: selectors + generate + progression list.** Wire to core. 🔄 In progress — `FretboardDiagram.tsx` and `VerificationPage.tsx` built; verification pass pending; selectors not yet started.
-- **Phase 5 — UI: SVG fretboard render.** Roots, chord tones, shape name, movement hint. 🔄 `FretboardDiagram` component done (horizontal layout, role colours, nut/fret display). Needs wiring into the real dynamic UI.
+- **Phase 4 — UI: selectors + generate + progression list.** Wire to core. ✅ Full landing page complete: CAGED explainer (dark section, 5 shape cards), `KeySelector`, `ProgressionSelector` (mode-filtered), Generate button, chord + fretboard display (random shape per chord), footer. Font: Space Grotesk 700.
+- **Phase 5 — UI: SVG fretboard render.** Roots, chord tones, shape name, movement hint. ✅ `FretboardDiagram` wired into both the CAGED explainer and the dynamic progression display. `showLabel` prop added.
+- **Phase 5b — UI: full-neck diagram.** ✅ `FullNeckDiagram` replaces per-chord cards. Wood-toned SVG neck, all 4 chord shapes overlaid, active/inactive dot coloring (green + blue root ring / gray), chord selector buttons, responsive orientation (landscape ≥768px / portrait <768px via `useIsNarrow` hook).
 - **Phase 6 — save loops (localStorage).** Minimal.
 - **Phase 7 (stretch) — AI vibe layer.** Schema-constrained Haiku call, whitelist
   validation, deterministic fallback, key entry.
@@ -170,8 +171,9 @@ Each phase = a legible commit (or few). Keep history clean — it's graded evide
 
 - Deploy target (Vercel / Netlify / GH Pages / just `dev`) — decide near the end;
   doesn't affect the build.
-- **CAGED shape data needs human verification** against a real guitar (especially G minor, C minor). Verification page is live at `localhost:5173`; Karl to complete the pass before building dynamic UI.
-- **`App.tsx` is temporarily hardwired to `VerificationPage`** — revert to real app shell once verification is done.
+- **CAGED shape data verified ✅** — Karl completed the pass; shapes look correct. `VerificationPage` now lives at `/all-chords` as a permanent diagnostic tool.
+- **UI theme (locked 2026-06-12, font updated 2026-06-12):** light background (`#f0f5ff`), blue-500 accent, Space Grotesk 700 display font (switched from Syne 800 — too wide/fat at large sizes), DM Sans body. All sections complete.
+- **Full-neck diagram (2026-06-12):** `FullNeckDiagram` — wood-gradient SVG neck, all progression chords overlaid simultaneously, active chord green (`#4ade80`) + blue root ring (`#3b82f6`), inactive gray. Chord selector buttons below neck. Responsive: landscape ≥768px, portrait <768px. `FretboardDiagram` retained for CAGED explainer section.
 
 ## 9. AI usage tracking (meta-tooling)
 

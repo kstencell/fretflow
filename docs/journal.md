@@ -270,3 +270,69 @@ coding to a cheaper model.
 **Open threads:**
 - **Human verification pass still needed** — Karl has the page running; shape data (especially G minor, C minor) needs checking against a real guitar before we trust it.
 - Next after verification: pull back from the diagnostic page and build the real dynamic UI — key/progression selectors wired to the core, with the fretboard rendering actual generated progressions.
+
+## 2026-06-12 — Routing, hero section & light theme
+
+**Focus:** Build the landing page shell — routing, hero section, and visual theme.
+
+**Decisions:**
+- `VerificationPage` moves to `/all-chords` permanently (diagnostic tool, not home page).
+- Light theme with blue accent — Karl preferred light over dark; blue stays as primary color throughout.
+- Display font: **Syne 800** (geometric, techy) over Playfair Display (too classical). Body: DM Sans.
+- Background: `#f0f5ff` (barely-blue white) — warm without being stark white.
+- Hero layout is full-width (no max-width on content); eyebrow pill badge removed per Karl's feedback.
+- Stale Vite scaffold CSS in `index.css` was constraining `#root` to 1126px — stripped to a clean reset.
+
+**Done:**
+- `react-router-dom` installed; `src/App.tsx` wired with `BrowserRouter` — `/` → `HomePage`, `/all-chords` → `VerificationPage`.
+- `src/ui/HomePage.tsx` — hero section complete: Syne 800 wordmark, tagline, blue CTA button, SVG fretboard string decoration, radial blue glow; stub sections for how-caged/app/footer in place.
+- `src/index.css` — stripped Vite scaffold CSS (was locking `#root` to 1126px with border); now just Tailwind import + minimal body/box-sizing reset.
+
+**Open threads:**
+- "How CAGED Works" explainer section — next agreed step.
+- App section (selectors + fretboard) and footer still stubs.
+
+## 2026-06-12 — Phase 4 complete: full landing page UI
+
+**Focus:** Build the remaining landing page sections (CAGED explainer, app controls, footer) and fix a font width issue.
+
+**Decisions:**
+- **CAGED explainer section:** dark band (`bg-slate-900`) to contrast with light hero — creates visual rhythm and suits `FretboardDiagram`'s existing dark SVG. Computes the 5 canonical open-position `PlacedShape`s at module level using `placeShape` (which naturally returns open-position for namesake chords); no hardcoded positions needed.
+- **KeySelector:** controlled component (`value: Key, onChange`); 12 root-note buttons keyed by pitch class (so enharmonic equivalents share state correctly); Major/minor toggle with `handleKeyChange` in `HomePage` that auto-resets the template when mode switches — prevents musically nonsensical cross-mode realizations.
+- **ProgressionSelector:** filters templates by first-numeral case (uppercase `I` = major, lowercase `i` = minor) to only show applicable progressions for the current mode. Each card shows label, numerals, and genre tags.
+- **Generate flow:** `pickShape` collects all valid `PlacedShape` candidates for a chord and picks one at random — every Generate press can surface a different position, which is the core practice-tool behaviour. `showLabel={false}` prop added to `FretboardDiagram` so the column header (numeral + chord name) doesn't duplicate the diagram's internal label.
+- **Font swap:** Syne 800 looked extremely wide/fat at large sizes (screenshotted and confirmed). Switched to **Space Grotesk 700** — same geometric/modern character, meaningfully narrower strokes. Design-notes updated.
+
+**Done:**
+- `src/ui/HomePage.tsx` — full landing page: CAGED explainer section (dark band + 5 shape cards + legend), app section (heading + white card), key selector wired, progression selector wired, generate button + chord + fretboard display, footer. Font swapped Syne → Space Grotesk throughout.
+- `src/ui/KeySelector.tsx` — new; 12 root-note buttons + major/minor toggle; controlled component.
+- `src/ui/ProgressionSelector.tsx` — new; mode-filtered template grid; label + numerals + genre tags per card.
+- `src/ui/FretboardDiagram.tsx` — added `showLabel?: boolean` prop (defaults `true`; existing usages unaffected).
+- `docs/design-notes.md` — Phase 4 status updated; font decision updated; UI theme note updated.
+
+**Open threads:**
+- Phase 6 (save loops / localStorage) not yet started.
+- UX polish: progression display stays stale when key/template changes after generating (could auto-clear); Generate button doesn't change to "Regenerate" after first press.
+- Stretch AI vibe layer still deferred.
+
+## 2026-06-12 — Full-neck diagram redesign
+
+**Focus:** Replace the per-chord card layout with a full guitar neck SVG showing all chord shapes overlaid, with interactive chord highlighting.
+
+**Decisions:**
+- **Full neck instead of cards:** show all 4 chord shapes on one neck simultaneously so the spatial relationship between positions is visible. This is the core pedagogical point of CAGED.
+- **Orientation:** wide viewport (≥768px) = landscape (nut left, low E bottom — looks like looking down the neck while playing); narrow = portrait (nut top, low E left — chord-chart style). Breakpoint matches Tailwind `md`.
+- **Responsive strategy:** `useIsNarrow` hook reads `window.innerWidth` on mount + resize and passes `orientation` prop. Avoids the CSS `hidden/flex` class conflict that would arise from rendering two instances.
+- **Active/inactive coloring:** active chord = solid green (`#4ade80`) dots, blue ring (`#3b82f6`) on roots only. Inactive chords = slate gray (`#64748b`) at 45% opacity. No root/third/fifth distinction — Karl's call, chord identity is the primary encoding.
+- **Portrait SVG sizing:** `maxHeight: '72vh', width: 'auto'` prevents the portrait viewBox (184×784) from stretching to fill container width (~1600px tall on mobile).
+- **Chord selector buttons:** row below the neck; active = green-400 bg matching dot color; inactive = slate-800. Roman numeral in small mono + chord name. Active index resets to 0 on each Generate press.
+- **`FretboardDiagram` kept** for the CAGED explainer section — mini per-shape diagrams are correct there (teaching individual shapes, not a progression).
+
+**Done:**
+- `src/ui/FullNeckDiagram.tsx` — new component: SVG neck with wood gradient, inlay dots, string gauge variation, fret labels; dot overlay (inactive pass then active pass for z-order); chord selector buttons; `orientation` prop drives landscape vs. portrait via `px`/`py` coordinate helpers that swap axes.
+- `src/ui/HomePage.tsx` — `useIsNarrow` hook added; `activeChord` state + reset on generate; old chord card grid removed; `FullNeckDiagram` wired into app section in `bg-slate-900` container; app section widened from `max-w-3xl` to `max-w-5xl`.
+
+**Open threads:**
+- Phase 6 (save loops / localStorage) still not started — next agreed topic.
+- UX polish carry-overs: stale display on key/template change; Generate → Regenerate label after first press.
+- Stretch AI vibe layer still deferred.
