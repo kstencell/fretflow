@@ -93,7 +93,6 @@ right-sized model, not reflexively reaching for the biggest one.
 - **Triads only** (no 7ths/extensions).
 - 5 CAGED shapes.
 - ~5 progression templates (pop, folk, blues, minor, random).
-- 4 neck regions.
 - SVG fretboard with roots/chord-tones/shape-name/simple movement hint.
 - Deterministic generation end-to-end, fully working *without* any API key.
 
@@ -101,10 +100,12 @@ right-sized model, not reflexively reaching for the biggest one.
 - 7th chords, modes, scale overlays, chord-tone targeting.
 - Backing tracks / audio playback.
 - Smart voice-leading. Movement hint = simple "shift N frets to nearest shape."
+- Neck region filtering (deferred — pick a random valid placement from frets 0–12 for now).
 - Accounts / sync / backend of any kind.
 
 **Stretch (only if core is done + tested):**
 - AI vibe layer (it's a *stretch*, not the spine — the app must be complete without it).
+- Neck region selector + region-filtered placement.
 - Saved practice history beyond a single localStorage list.
 
 ## 5. Risks & where the "AI build story" lives
@@ -136,11 +137,9 @@ judgment calls.
 - **Phase 1 — theory: notes + scales + diatonic chords.** TDD against known key
   signatures and diatonic triads. ✅ (`notes.ts` + `chords.ts`, 8 tests)
 - **Phase 2 — theory: progression templates → concrete chords.** TDD. ✅ (`realizeProgression` in `progressions.ts`, 2 tests)
-- **Phase 3 — theory: CAGED shapes + region mapping + fretboard positions.** Heaviest
-  testing. Human verification pass. 🔄 In progress — data model + shape data done;
-  placement algorithm next.
-- **Phase 4 — UI: selectors + generate + progression list.** Wire to core.
-- **Phase 5 — UI: SVG fretboard render.** Roots, chord tones, shape name, movement hint.
+- **Phase 3 — theory: CAGED shapes + fretboard positions.** Heaviest testing. Human verification pass. ✅ (`fretboard.ts`, `shapes.ts`, `placement.ts`; 42 tests. Region filtering deferred to stretch.) Placement extended post-session: fret wrapping via `getNoteAt(% 12)`, root scan to fret 12, root-at-12 guard.
+- **Phase 4 — UI: selectors + generate + progression list.** Wire to core. 🔄 In progress — `FretboardDiagram.tsx` and `VerificationPage.tsx` built; verification pass pending; selectors not yet started.
+- **Phase 5 — UI: SVG fretboard render.** Roots, chord tones, shape name, movement hint. 🔄 `FretboardDiagram` component done (horizontal layout, role colours, nut/fret display). Needs wiring into the real dynamic UI.
 - **Phase 6 — save loops (localStorage).** Minimal.
 - **Phase 7 (stretch) — AI vibe layer.** Schema-constrained Haiku call, whitelist
   validation, deterministic fallback, key entry.
@@ -163,7 +162,7 @@ Each phase = a legible commit (or few). Keep history clean — it's graded evide
 ## 8. CAGED placement model (decided 2026-06-12)
 
 - **Puzzle-piece scan:** shape template = `{ stringOffset, fretOffset, role }` offsets from lowest-string root. Placement scans fretboard for root note positions, overlays template, verifies all chord tones match. No hardcoded anchor string — valid placements emerge from the scan.
-- **12-fret scope:** frets 0–12 always contain at least one valid placement per shape/key (patterns repeat at 12). Region filtering deferred.
+- **Fret scope (revised 2026-06-12):** root scan covers frets 0–12. For roots at frets 0–11, shape notes may extend beyond fret 12 (rendered with real fret numbers; `getNoteAt` wraps via `% 12`). Root at fret 12 only if every other note is also ≤ 12 — this admits backward-looking shapes (G, C) without duplicating forward-looking ones (E, A, D). Region filtering deferred.
 - **Quality-specific shapes:** `CagedShape.quality: 'major' | 'minor'`. Diminished shapes skipped for v1.
 - **Gm shape:** B string omitted (minor third unreachable in open position).
 
@@ -171,7 +170,8 @@ Each phase = a legible commit (or few). Keep history clean — it's graded evide
 
 - Deploy target (Vercel / Netlify / GH Pages / just `dev`) — decide near the end;
   doesn't affect the build.
-- CAGED shape data needs human verification against a real guitar (especially G minor, C minor).
+- **CAGED shape data needs human verification** against a real guitar (especially G minor, C minor). Verification page is live at `localhost:5173`; Karl to complete the pass before building dynamic UI.
+- **`App.tsx` is temporarily hardwired to `VerificationPage`** — revert to real app shell once verification is done.
 
 ## 9. AI usage tracking (meta-tooling)
 

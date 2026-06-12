@@ -230,3 +230,43 @@ coding to a cheaper model.
 - **Shape data needs human verification** against a real guitar — especially G minor and C minor shapes. Tests pass mathematically but the offsets were derived by Claude.
 - **Next step: placement algorithm** — `placeShape(chord, shape): PlacedShape | null` — scans fretboard for root positions, overlays template, verifies chord tones, returns resolved positions.
 - `sanity.test.ts` still present (delete whenever).
+
+## 2026-06-12 — Phase 3: placeShape algorithm + tests
+
+**Focus:** Implement `placeShape(chord, shape): PlacedShape | null` — the puzzle-piece scan that places a CAGED shape onto the fretboard for a given chord.
+
+**Decisions:**
+- No new decisions; the placement model was fully locked in the previous session (puzzle-piece scan, frets 0–12, quality guard first).
+- `placeShape` lives in its own `src/theory/placement.ts` — it imports from both `fretboard.ts` and `types.ts`, so neither of those files was the right home.
+
+**Done:**
+- `src/theory/placement.ts` — `placeShape(chord, shape)`: quality guard → chord-tones table → fret/string scan → overlay + verify → return first valid `PlacedShape` or `null`.
+- `src/theory/placement.test.ts` — 8 cases: 3 null cases (quality mismatch major/minor both directions + diminished), 5 valid placements (open E major, open Am, F major barre, open D major, open C major) each with full per-position string/fret/role/pitchClass assertions. 42 tests passing total.
+
+**Open threads:**
+- Shape data still needs human verification against a real guitar (especially G minor, C minor) — this is a known open item from the previous session.
+- Next step: region filtering — given a `PlacedShape`, determine which neck region(s) it falls in and, conversely, filter/select placements for a target region.
+
+## 2026-06-12 — Phase 4 start: SVG fretboard + verification page
+
+**Focus:** Begin the UI with a visual shape-verification tool — render all 10 CAGED shapes across all common chords so Karl can check the shape data against a real guitar in one pass.
+
+**Decisions:**
+- Start UI from the fretboard-first end (not selectors first), so shape data can be visually verified before wiring up dynamic controls.
+- Diagram orientation: **horizontal, CCW 90°** — nut on the left, low E (string 1) at the bottom, high e at the top. Mirrors looking down the neck while playing.
+- Open-string dots sit **on the nut bar** (not floating to its left) — eliminates the visual "shadow fret" that made diagrams look like they had 5 cells instead of 4.
+- Always show exactly **4 fret cells** per diagram (FRETS_MIN = 4); shapes never naturally span more than 4.
+- Fret wrapping: `getNoteAt` now uses `fret % 12` so shape notes can legally land above fret 12 (e.g. D-shape root at fret 11 → notes at 13/14). Renders with real fret numbers.
+- Root-at-fret-12 constraint: root may be placed at fret 12 **only if every other note in the shape is also ≤ 12**. This admits "backward-looking" shapes (G, C — all offsets ≤ 0) while blocking "forward-looking" duplicates (E, A, D — positive offsets would just replicate the fret-0 placement). Fixes the missing G shape for E major.
+
+**Done:**
+- `src/ui/FretboardDiagram.tsx` — SVG chord diagram component; takes a `PlacedShape`; horizontal layout (nut left, low E bottom); amber = root, indigo = third, slate = fifth; note name inside each dot; ✕ for muted strings; fret number label for non-open shapes.
+- `src/ui/VerificationPage.tsx` — diagnostic page; 8 major + 8 minor chords; all 5 CAGED shapes per chord in E→A→G→D→C order; "no placement" placeholder for nulls; color legend.
+- `src/App.tsx` — temporarily renders `VerificationPage` for the verification pass.
+- `src/theory/fretboard.ts` — `getNoteAt` extended to accept any fret via `fret % 12`.
+- `src/theory/placement.ts` — root scan extended to fret 12; `f > 12` upper cap removed for roots 0–11; root-at-12 guard `fret === 12 && f > 12` added.
+- All 42 tests still passing after placement changes.
+
+**Open threads:**
+- **Human verification pass still needed** — Karl has the page running; shape data (especially G minor, C minor) needs checking against a real guitar before we trust it.
+- Next after verification: pull back from the diagnostic page and build the real dynamic UI — key/progression selectors wired to the core, with the fretboard rendering actual generated progressions.

@@ -21,3 +21,9 @@
 {"ts": "2026-06-11T23:58:00Z", "bucket": "app-logic", "note": "types.ts (Shape types) + fretboard.ts + shapes.ts"}
 {"ts": "2026-06-12T00:20:00Z", "bucket": "testing", "note": "fretboard.test.ts + shapes.test.ts"}
 {"ts": "2026-06-12T01:46:37Z", "bucket": "planning-docs", "note": "clean-up"}
+{"ts": "2026-06-12T22:30:00Z", "bucket": "app-logic", "note": "placement.ts — placeShape algorithm"}
+{"ts": "2026-06-12T22:45:00Z", "bucket": "testing", "note": "placement.test.ts — 8 cases for placeShape"}
+{"ts": "2026-06-12T02:47:38Z", "bucket": "planning-docs", "note": "clean-up"}
+{"ts": "2026-06-12T23:00:00Z", "bucket": "ui", "note": "FretboardDiagram SVG component + VerificationPage + App wiring"}
+{"ts": "2026-06-12T23:50:00Z", "bucket": "app-logic", "note": "placeShape fret-wrap fix + root-at-12 constraint"}
+{"ts": "2026-06-12T03:52:04Z", "bucket": "planning-docs", "note": "clean-up"}

@@ -15,7 +15,8 @@ export const FRETBOARD: Note[][] = OPEN_STRINGS.map((openPitchClass) =>
   })
 );
 
-// string is 1-indexed (1 = low E, 6 = high e), fret is 0–12
+// string is 1-indexed (1 = low E, 6 = high e), fret is 0+.
+// Frets above 12 wrap (same notes repeat every 12 frets).
 export function getNoteAt(string: number, fret: number): Note {
-  return FRETBOARD[string - 1][fret];
+  return FRETBOARD[string - 1][fret % 12];
 }

@@ -11,7 +11,11 @@ export function placeShape(chord: Chord, shape: CagedShape): PlacedShape | null 
     fifth: (chord.root.pitchClass + 7) % 12,
   };
 
-  // Scan every fret position where the root note appears; try to overlay the shape.
+  // Scan root positions up to fret 12.
+  // Root at fret 12 is allowed only when every shape note also lands at ≤ 12 — this
+  // admits "backward-looking" shapes (G, C) whose offsets are all ≤ 0, while blocking
+  // "forward-looking" shapes (E, A, D) that would just duplicate their fret-0 placement.
+  // For roots at frets 0–11, shape notes may extend beyond 12; getNoteAt wraps those.
   for (let fret = 0; fret <= 12; fret++) {
     for (let string = 1; string <= 6; string++) {
       if (getNoteAt(string, fret).pitchClass !== tones.root) continue;
@@ -23,7 +27,7 @@ export function placeShape(chord: Chord, shape: CagedShape): PlacedShape | null 
         const s = string + sn.stringOffset;
         const f = fret + sn.fretOffset;
 
-        if (s < 1 || s > 6 || f < 0 || f > 12) { valid = false; break; }
+        if (s < 1 || s > 6 || f < 0 || (fret === 12 && f > 12)) { valid = false; break; }
 
         const note = getNoteAt(s, f);
         if (note.pitchClass !== tones[sn.role]) { valid = false; break; }
