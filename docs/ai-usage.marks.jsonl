@@ -17,3 +17,7 @@
 {"ts": "2026-06-11T23:31:00Z", "bucket": "testing", "note": "progressions.test.ts — realizeProgression test table"}
 {"ts": "2026-06-11T23:32:00Z", "bucket": "app-logic", "note": "progressions.ts — realizeProgression implementation"}
 {"ts": "2026-06-11T23:36:01Z", "bucket": "planning-docs", "note": "clean-up"}
+{"ts": "2026-06-11T23:37:00Z", "bucket": "planning-docs", "note": "CAGED data model discussion + quality decision"}
+{"ts": "2026-06-11T23:58:00Z", "bucket": "app-logic", "note": "types.ts (Shape types) + fretboard.ts + shapes.ts"}
+{"ts": "2026-06-12T00:20:00Z", "bucket": "testing", "note": "fretboard.test.ts + shapes.test.ts"}
+{"ts": "2026-06-12T01:46:37Z", "bucket": "planning-docs", "note": "clean-up"}

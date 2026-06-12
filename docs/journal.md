@@ -205,3 +205,28 @@ coding to a cheaper model.
 - Phase 3 (CAGED shapes + region mapping) is the ⛔ gate — needs CAGED data model discussion with Karl before any code.
 - `sanity.test.ts` still present; delete when first test file makes it redundant (already redundant now — Karl's call).
 - Progressions catalog still a draft; verify genre tags + chord choices against a real guitar.
+
+## 2026-06-12 — Phase 3: CAGED data model + shape data
+
+**Focus:** Settle the CAGED data model (the ⛔ gate), unblock the remaining types, and write the fretboard matrix and shape data with tests.
+
+**Decisions:**
+- **Puzzle-piece placement model:** shape templates store `{ stringOffset, fretOffset, role }` offsets relative to the lowest-string root. Placement scans the fretboard for root positions and verifies all chord tones fit — no hardcoded anchor string. Elegant: verification is built into placement, and multiple-root shapes fall out naturally.
+- **12-fret scope, no region filtering for now:** frets 0–12 guarantee at least one valid placement for every shape/key combination (patterns repeat at 12). Region filtering deferred.
+- **Shape offsets are quality-specific:** major/minor shapes differ by one fret on the third. Added `quality: Exclude<ChordQuality, "diminished">` to `CagedShape`.
+- **Diminished shapes skipped for v1:** no current progression templates produce diminished chords.
+- **Gm shape omits B string:** the minor third there would require fret 11+ in open position — B string muted in practice.
+- **Fretboard names use E♭ and B♭** (not D# and A#) — conventional guitarist spelling.
+
+**Done:**
+- `src/theory/types.ts` — added `ChordToneRole`, `ShapeNote`, `CagedShapeName`, `CagedShape` (with quality), `FretboardPosition`, `PlacedShape`.
+- `src/theory/fretboard.ts` — `FRETBOARD` matrix (6 strings × 13 frets, generated from open-string pitch classes); `getNoteAt(string, fret)` accessor.
+- `src/theory/fretboard.test.ts` — 13 cases: all 6 open strings, fretted positions, E♭/B♭ spelling, fret-12 octave repeat.
+- `src/theory/shapes.ts` — `CAGED_SHAPES`: 10 shapes (5 names × major + minor) with verified offsets.
+- `src/theory/shapes.test.ts` — 10 cases anchored at open-position chords where possible; C minor uses Dm (fret 5) since no open Cm exists in standard tuning.
+- All 34 tests passing.
+
+**Open threads:**
+- **Shape data needs human verification** against a real guitar — especially G minor and C minor shapes. Tests pass mathematically but the offsets were derived by Claude.
+- **Next step: placement algorithm** — `placeShape(chord, shape): PlacedShape | null` — scans fretboard for root positions, overlays template, verifies chord tones, returns resolved positions.
+- `sanity.test.ts` still present (delete whenever).

@@ -137,7 +137,8 @@ judgment calls.
   signatures and diatonic triads. ✅ (`notes.ts` + `chords.ts`, 8 tests)
 - **Phase 2 — theory: progression templates → concrete chords.** TDD. ✅ (`realizeProgression` in `progressions.ts`, 2 tests)
 - **Phase 3 — theory: CAGED shapes + region mapping + fretboard positions.** Heaviest
-  testing. Human verification pass.
+  testing. Human verification pass. 🔄 In progress — data model + shape data done;
+  placement algorithm next.
 - **Phase 4 — UI: selectors + generate + progression list.** Wire to core.
 - **Phase 5 — UI: SVG fretboard render.** Roots, chord tones, shape name, movement hint.
 - **Phase 6 — save loops (localStorage).** Minimal.
@@ -159,10 +160,18 @@ Each phase = a legible commit (or few). Keep history clean — it's graded evide
 - **AI vibe layer:** strictly a **stretch** — deterministic app ships complete and
   fully usable with no key entered; AI added only if time remains. ✅
 
-## 8. Still open
+## 8. CAGED placement model (decided 2026-06-12)
+
+- **Puzzle-piece scan:** shape template = `{ stringOffset, fretOffset, role }` offsets from lowest-string root. Placement scans fretboard for root note positions, overlays template, verifies all chord tones match. No hardcoded anchor string — valid placements emerge from the scan.
+- **12-fret scope:** frets 0–12 always contain at least one valid placement per shape/key (patterns repeat at 12). Region filtering deferred.
+- **Quality-specific shapes:** `CagedShape.quality: 'major' | 'minor'`. Diminished shapes skipped for v1.
+- **Gm shape:** B string omitted (minor third unreachable in open position).
+
+## 9. Still open
 
 - Deploy target (Vercel / Netlify / GH Pages / just `dev`) — decide near the end;
   doesn't affect the build.
+- CAGED shape data needs human verification against a real guitar (especially G minor, C minor).
 
 ## 9. AI usage tracking (meta-tooling)
 
