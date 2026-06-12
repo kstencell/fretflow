@@ -336,3 +336,55 @@ coding to a cheaper model.
 - Phase 6 (save loops / localStorage) still not started — next agreed topic.
 - UX polish carry-overs: stale display on key/template change; Generate → Regenerate label after first press.
 - Stretch AI vibe layer still deferred.
+
+## 2026-06-12 — Warm acoustic UI redesign
+
+**Focus:** Complete visual overhaul to a warm acoustic guitar aesthetic — new fonts,
+palette, fretboard materials, role-based dot colors, and component unification.
+
+**Decisions:**
+- **Fonts:** Fraunces 700 (display) + Lora serif (body/UI) replace Space Grotesk/DM Sans.
+  Warm serif character suits the acoustic theme better than geometric sans.
+- **Palette:** cream `#f4ede0` page background, walnut `#2d1a0e` dark sections, brass
+  `#c4882a` primary accent. Off-white/wood/amber family throughout.
+- **Role-based dot colors (locked):** root = steel blue `#5896a8` + amber-gold `#f59e0b`
+  border; third = warm ivory `#c8b888`; fifth = amber gold `#d4862a`. These replace the
+  earlier green/gray scheme and now apply to both fretboard components.
+- **Fretboard visual language (locked):** rosewood gradient (`#7A4828→#4E2810→#7A4828`),
+  silver-grey frets `#9E9C96`, silver strings `#C8C8C4`, ivory nut `#F0E5B8`. Both
+  `FretboardDiagram` and `FullNeckDiagram` now share these material constants exactly.
+- **KeySelector UI:** replaced piano keyboard (wrong metaphor for guitar) with a two-row
+  fret-dot grid — naturals on top (44px circles), accidentals below (40px). Animated
+  sliding brass pill for Major/minor mode toggle.
+- **FullNeckDiagram container:** changed from near-black `#1c0e05` to light cream
+  `#f5ede2` — the rosewood gradient itself provides contrast; a dark wrapper was
+  competing with the neck.
+- **Root note highlight:** collapsed separate ring circle into a tight `stroke` on the
+  dot itself — eliminates the gap that was visible with a separate larger circle.
+- **RoleLegend shared component:** extracted into `src/ui/RoleLegend.tsx`, used in both
+  the CAGED explainer section and below the full neck. Dots at DOT_R=9 with PAD=3 so
+  root's 2.5px stroke doesn't clip.
+- **Chord selector button text:** now shows numeral + chord name + shape name (three rows)
+  so the player knows which CAGED shape is being highlighted.
+
+**Done:**
+- `src/index.css` — body background changed to cream `#f4ede0`.
+- `src/ui/HomePage.tsx` — full redesign: Fraunces/Lora fonts (loaded via useEffect),
+  wood grain SVG in hero (feTurbulence + multiply blend), larger font sizes throughout,
+  CAGED section dark with watermark letters, app section light with 2-column controls,
+  FullNeckDiagram in cream container, chordLabels include shapeName.
+- `src/ui/KeySelector.tsx` — complete rewrite: two-row fret-dot grid, animated mode
+  toggle, brass/cream palette.
+- `src/ui/ProgressionSelector.tsx` — larger font sizes, brass accent for active state,
+  inline styles (no Tailwind arbitrary values for complex styles).
+- `src/ui/FretboardDiagram.tsx` — rosewood gradient, silver strings/frets, ivory nut;
+  DOT_R=9; role-based colors matching FullNeckDiagram exactly.
+- `src/ui/FullNeckDiagram.tsx` — role-based ACTIVE_ROLE colors; inactive dots at 0.7
+  opacity with note names; chord buttons show numeral/name/shape; RoleLegend at bottom.
+- `src/ui/RoleLegend.tsx` — new shared component: SVG dots at fretboard size, root with
+  amber border, rendered in both CAGED section and below full neck.
+
+**Open threads:**
+- Phase 6 (save loops / localStorage) still not started.
+- UX polish: stale display on key/template change; Generate → Regenerate after first press.
+- Stretch AI vibe layer still deferred.

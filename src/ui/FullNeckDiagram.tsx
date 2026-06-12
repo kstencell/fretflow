@@ -3,7 +3,8 @@
 // orientation='portrait':  nut top,  low E left  (chord-chart style).
 // Both use the same geometry constants; x/y helpers swap the axes for portrait.
 
-import type { PlacedShape } from '../theory/types';
+import type { PlacedShape, ChordToneRole } from '../theory/types';
+import { RoleLegend } from './RoleLegend';
 
 const STRING_COUNT = 6;
 
@@ -33,14 +34,19 @@ const INLAY_COLOR = '#BFA882';
 const LABEL_COLOR = '#9A7050';
 
 // Chord dot appearance
-const DOT_R = 7;
-const ACTIVE_FILL = '#4ade80';    // green-400
-const ACTIVE_ROOT_RING = '#3b82f6'; // blue-500
-const INACTIVE_FILL = '#64748b';  // slate-500
+const DOT_R = 9;
+const INACTIVE_FILL = '#5a3c22';
+
+const ACTIVE_ROLE: Record<ChordToneRole, { fill: string; stroke: string; strokeWidth: number; text: string }> = {
+  root:  { fill: '#5896a8', stroke: '#f59e0b', strokeWidth: 2.5, text: '#ffffff'  },
+  third: { fill: '#c8b888', stroke: 'rgba(0,0,0,0.15)', strokeWidth: 1,   text: '#3d2010'  },
+  fifth: { fill: '#d4862a', stroke: 'rgba(0,0,0,0.2)',  strokeWidth: 1,   text: '#1c0f06'  },
+};
 
 interface ChordLabel {
   numeral: string;
   name: string;
+  shapeName?: string;
 }
 
 interface Props {
@@ -223,18 +229,21 @@ export function FullNeckDiagram({
             const main = dotMain(pos.fret);
             const cross = dotCross(pos.string);
             return (
-              <circle
-                key={`inactive-${chordIdx}-${pos.string}-${pos.fret}`}
-                cx={px(main, cross)} cy={py(main, cross)}
-                r={DOT_R}
-                fill={INACTIVE_FILL}
-                opacity={0.45}
-              />
+              <g key={`inactive-${chordIdx}-${pos.string}-${pos.fret}`} opacity={0.7}>
+                <circle cx={px(main, cross)} cy={py(main, cross)} r={DOT_R} fill={INACTIVE_FILL} />
+                <text
+                  x={px(main, cross)} y={py(main, cross)}
+                  textAnchor="middle" dominantBaseline="middle"
+                  fill="#f0e8d8" fontSize={7} fontWeight="600" fontFamily="sans-serif"
+                >
+                  {pos.note.name}
+                </text>
+              </g>
             );
           });
       })}
 
-      {/* Active chord dots — green fill, blue ring on roots */}
+      {/* Active chord dots — role-based colours with tight border on root */}
       {(() => {
         const ps = placements[activeIndex];
         if (!ps) return null;
@@ -243,24 +252,23 @@ export function FullNeckDiagram({
           .map(pos => {
             const main = dotMain(pos.fret);
             const cross = dotCross(pos.string);
+            const { fill, stroke, strokeWidth, text } = ACTIVE_ROLE[pos.role];
             return (
               <g key={`active-${pos.string}-${pos.fret}`}>
                 <circle
                   cx={px(main, cross)} cy={py(main, cross)}
                   r={DOT_R}
-                  fill={ACTIVE_FILL}
-                  stroke="rgba(0,0,0,0.2)"
-                  strokeWidth={1}
+                  fill={fill}
+                  stroke={stroke}
+                  strokeWidth={strokeWidth}
                 />
-                {pos.role === 'root' && (
-                  <circle
-                    cx={px(main, cross)} cy={py(main, cross)}
-                    r={DOT_R + 3.5}
-                    fill="none"
-                    stroke={ACTIVE_ROOT_RING}
-                    strokeWidth={2.5}
-                  />
-                )}
+                <text
+                  x={px(main, cross)} y={py(main, cross)}
+                  textAnchor="middle" dominantBaseline="middle"
+                  fill={text} fontSize={8} fontWeight="700" fontFamily="sans-serif"
+                >
+                  {pos.note.name}
+                </text>
               </g>
             );
           });
@@ -294,17 +302,32 @@ export function FullNeckDiagram({
             key={i}
             onClick={() => onActiveChange?.(i)}
             className={[
-              'px-5 py-2.5 rounded-2xl text-sm font-medium transition-all duration-150',
+              'px-5 py-3 rounded-2xl transition-all duration-150',
               i === activeIndex
-                ? 'bg-green-400 text-slate-900 shadow-md shadow-green-400/30'
-                : 'bg-slate-800 text-slate-400 hover:bg-slate-700 hover:text-slate-200',
+                ? 'bg-[#c4882a] text-[#1c0f06] shadow-md'
+                : 'bg-[#f0e8d8] text-[#7a5030] hover:bg-[#e8dcc8] hover:text-[#3d2010]',
             ].join(' ')}
           >
-            <span className="font-mono text-xs mr-2 opacity-70">{label.numeral}</span>
-            {label.name}
+            <div className="flex flex-col items-center gap-0.5">
+              <span style={{ fontSize: 11, fontFamily: 'monospace', opacity: 0.65, letterSpacing: '0.06em', fontWeight: 500 }}>
+                {label.numeral}
+              </span>
+              <span style={{ fontSize: 15, fontWeight: 700, lineHeight: 1.1, fontFamily: "'Lora', serif" }}>
+                {label.name}
+              </span>
+              {label.shapeName && (
+                <span style={{ fontSize: 10, fontStyle: 'italic', opacity: 0.65, fontFamily: "'Lora', serif", whiteSpace: 'nowrap' }}>
+                  {label.shapeName} shape
+                </span>
+              )}
+            </div>
           </button>
         ))}
       </div>
+    )}
+
+    {placements.some(p => p !== null) && (
+      <RoleLegend labelColor="#9a7a58" className="mt-5" />
     )}
   </div>
   );

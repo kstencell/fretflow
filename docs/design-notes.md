@@ -172,8 +172,12 @@ Each phase = a legible commit (or few). Keep history clean — it's graded evide
 - Deploy target (Vercel / Netlify / GH Pages / just `dev`) — decide near the end;
   doesn't affect the build.
 - **CAGED shape data verified ✅** — Karl completed the pass; shapes look correct. `VerificationPage` now lives at `/all-chords` as a permanent diagnostic tool.
-- **UI theme (locked 2026-06-12, font updated 2026-06-12):** light background (`#f0f5ff`), blue-500 accent, Space Grotesk 700 display font (switched from Syne 800 — too wide/fat at large sizes), DM Sans body. All sections complete.
-- **Full-neck diagram (2026-06-12):** `FullNeckDiagram` — wood-gradient SVG neck, all progression chords overlaid simultaneously, active chord green (`#4ade80`) + blue root ring (`#3b82f6`), inactive gray. Chord selector buttons below neck. Responsive: landscape ≥768px, portrait <768px. `FretboardDiagram` retained for CAGED explainer section.
+- **UI theme (redesigned 2026-06-12):** warm acoustic palette — cream `#f4ede0` background, walnut `#2d1a0e` dark sections, brass `#c4882a` accent. Fonts: Fraunces 700 display + Lora serif body (loaded via Google Fonts useEffect injection). All sections complete.
+- **Role-based dot colors (locked 2026-06-12):** root = steel blue `#5896a8` + amber-gold `#f59e0b` stroke; third = warm ivory `#c8b888`; fifth = amber gold `#d4862a`. Applied identically in both `FretboardDiagram` and `FullNeckDiagram`. Inactive dots: `#5a3c22` at 0.7 opacity.
+- **Fretboard materials (locked 2026-06-12):** rosewood gradient (`#7A4828→#4E2810→#7A4828`), silver-grey frets `#9E9C96`, silver strings `#C8C8C4`, ivory nut `#F0E5B8`, DOT_R=9. Both fretboard components share these constants exactly.
+- **Full-neck diagram (updated 2026-06-12):** `FullNeckDiagram` — rosewood SVG neck, all progression chords overlaid simultaneously, role-based active dot colors (root/third/fifth), inactive gray at 0.7 opacity with note names, chord selector buttons (numeral + chord name + CAGED shape name). Container: light cream `#f5ede2`. Responsive: landscape ≥768px, portrait <768px.
+- **KeySelector (redesigned 2026-06-12):** two-row fret-dot grid (naturals row + accidentals row) replacing earlier piano-key layout. Animated sliding brass pill for Major/minor toggle.
+- **RoleLegend (new 2026-06-12):** `src/ui/RoleLegend.tsx` — shared component, SVG circles at DOT_R=9 (PAD=3 to prevent root stroke clipping), used in both CAGED explainer section and below full neck.
 
 ## 9. AI usage tracking (meta-tooling)
 

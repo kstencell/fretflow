@@ -1,7 +1,6 @@
 import type { Mode, ProgressionTemplate } from "../theory/types";
 import { PROGRESSION_TEMPLATES } from "../theory/progressions";
 
-// Templates whose first numeral is uppercase belong to major keys; lowercase to minor.
 function isApplicable(t: ProgressionTemplate, mode: Mode): boolean {
   const first = t.numerals[0];
   return mode === "major"
@@ -20,38 +19,79 @@ export function ProgressionSelector({ value, onChange, mode }: Props) {
 
   return (
     <div className="flex flex-col gap-3">
-      <span className="text-xs font-medium text-slate-400 uppercase tracking-widest">
+      <span
+        className="font-medium uppercase tracking-widest"
+        style={{ color: '#9a7a58', fontFamily: "'Lora', serif", fontSize: '0.875rem' }}
+      >
         Progression
       </span>
 
-      <div className="grid grid-cols-2 gap-2">
+      <div className="grid grid-cols-2 gap-2.5">
         {templates.map(t => {
           const active = t.id === value.id;
           return (
             <button
               key={t.id}
               onClick={() => onChange(t)}
-              className={`
-                text-left rounded-2xl px-4 py-3 border transition-all duration-150
-                ${active
-                  ? "bg-blue-50 border-blue-400 shadow-sm shadow-blue-100"
-                  : "bg-white border-slate-200 hover:border-blue-200 hover:bg-blue-50/40"
-                }
-              `}
+              className="text-left transition-all duration-200"
+              style={{
+                padding: '14px 16px',
+                borderRadius: 14,
+                background: active ? '#fdf5e6' : '#faf6ee',
+                borderLeft: active ? '4px solid #c4882a' : '1px solid #d9cbb0',
+                borderRight: '1px solid #d9cbb0',
+                borderTop: '1px solid #d9cbb0',
+                borderBottom: active ? '1px solid #e8cfa0' : '1px solid #d9cbb0',
+                boxShadow: active
+                  ? '2px 4px 20px rgba(196,136,42,0.14), inset 0 1px 0 rgba(255,255,255,0.8)'
+                  : '0 1px 4px rgba(45,26,14,0.06), inset 0 1px 0 rgba(255,255,255,0.6)',
+                cursor: 'pointer',
+              }}
             >
-              <div className={`text-sm font-semibold mb-1 ${active ? "text-blue-700" : "text-slate-700"}`}>
+              {/* Numeral pattern — the musical hero of the card */}
+              <div
+                style={{
+                  fontFamily: "'Fraunces', Georgia, serif",
+                  fontSize: '1.2rem',
+                  fontWeight: 600,
+                  letterSpacing: '0.06em',
+                  color: active ? '#c4882a' : '#b89070',
+                  marginBottom: 5,
+                  lineHeight: 1.2,
+                }}
+              >
+                {t.numerals.join(' · ')}
+              </div>
+
+              {/* Progression name */}
+              <div
+                style={{
+                  fontSize: '0.9375rem',
+                  fontWeight: 600,
+                  color: active ? '#7a4820' : '#4a2e1a',
+                  fontFamily: "'Lora', serif",
+                  marginBottom: 8,
+                }}
+              >
                 {t.label}
               </div>
-              <div className={`font-mono text-xs tracking-wide ${active ? "text-blue-500" : "text-slate-400"}`}>
-                {t.numerals.join(" · ")}
-              </div>
-              <div className="flex flex-wrap gap-1 mt-2">
+
+              {/* Genre tags */}
+              <div className="flex flex-wrap gap-1">
                 {t.genres.map(g => (
                   <span
                     key={g}
-                    className={`text-[10px] px-1.5 py-0.5 rounded-md font-medium ${
-                      active ? "bg-blue-100 text-blue-500" : "bg-slate-100 text-slate-400"
-                    }`}
+                    style={{
+                      fontSize: 11,
+                      padding: '2px 7px',
+                      borderRadius: 20,
+                      fontWeight: 600,
+                      letterSpacing: '0.04em',
+                      textTransform: 'uppercase' as const,
+                      background: active ? '#f5e6c8' : '#ede5d0',
+                      color: active ? '#a8731f' : '#9a7a58',
+                      fontFamily: "'Lora', serif",
+                    }}
                   >
                     {g}
                   </span>
