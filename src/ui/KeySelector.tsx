@@ -28,14 +28,15 @@ const MODES: { label: string; value: Mode }[] = [
 interface Props {
   value: Key;
   onChange: (key: Key) => void;
+  compact?: boolean;
 }
 
 function NoteButton({
-  name, active, natural, onClick,
+  name, active, natural, compact, onClick,
 }: {
-  name: string; pitchClass?: number; active: boolean; natural: boolean; onClick: () => void;
+  name: string; pitchClass?: number; active: boolean; natural: boolean; compact: boolean; onClick: () => void;
 }) {
-  const size = natural ? 44 : 40;
+  const size = compact ? (natural ? 40 : 36) : (natural ? 44 : 40);
   return (
     <button
       onClick={onClick}
@@ -61,7 +62,7 @@ function NoteButton({
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        fontSize: natural ? 13 : 11,
+        fontSize: compact ? (natural ? 11 : 10) : (natural ? 13 : 11),
         fontWeight: active ? 700 : 500,
         color: active ? '#1c0f06' : natural ? '#7a5030' : '#8a6040',
         fontFamily: "'Lora', serif",
@@ -74,7 +75,7 @@ function NoteButton({
   );
 }
 
-export function KeySelector({ value, onChange }: Props) {
+export function KeySelector({ value, onChange, compact = false }: Props) {
   const setRoot = (name: string, pitchClass: number) =>
     onChange({ tonic: { name, pitchClass }, mode: value.mode });
   const setMode = (mode: Mode) =>
@@ -93,7 +94,7 @@ export function KeySelector({ value, onChange }: Props) {
 
       <div className="flex flex-col gap-2.5">
         {/* Natural notes */}
-        <div className="flex gap-2">
+        <div className={`flex ${compact ? 'gap-1.5' : 'gap-2'}`}>
           {NATURALS.map(n => (
             <NoteButton
               key={n.pitchClass}
@@ -101,13 +102,14 @@ export function KeySelector({ value, onChange }: Props) {
               pitchClass={n.pitchClass}
               active={n.pitchClass === value.tonic.pitchClass}
               natural={true}
+              compact={compact}
               onClick={() => setRoot(n.name, n.pitchClass)}
             />
           ))}
         </div>
 
         {/* Accidentals */}
-        <div className="flex gap-2">
+        <div className={`flex ${compact ? 'gap-1.5' : 'gap-2'}`}>
           {ACCIDENTALS.map(a => (
             <NoteButton
               key={a.pitchClass}
@@ -115,6 +117,7 @@ export function KeySelector({ value, onChange }: Props) {
               pitchClass={a.pitchClass}
               active={a.pitchClass === value.tonic.pitchClass}
               natural={false}
+              compact={compact}
               onClick={() => setRoot(a.name, a.pitchClass)}
             />
           ))}

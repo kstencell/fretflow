@@ -388,3 +388,22 @@ palette, fretboard materials, role-based dot colors, and component unification.
 - Phase 6 (save loops / localStorage) still not started.
 - UX polish: stale display on key/template change; Generate → Regenerate after first press.
 - Stretch AI vibe layer still deferred.
+
+## 2026-06-14 — Hero section font & decoration polish
+
+**Focus:** Refine the hero section's visual quality — logo font and background decoration.
+
+**Decisions:**
+- **Logo font stays Fraunces, but at weight 700** (not 900). Karl trialled Playfair Display, Cormorant Garamond, and Yeseva One, then concluded the original Fraunces was best. Both hero h1 and footer wordmark now unified at 700.
+- **Hero background = fretboard lines only** — no guitar body or headstock. Attempts at a full guitar silhouette (figure-8 body path + headstock) were rejected after screenshots showed the bezier curves produced an unrecognisable shape. Cleaner to keep the abstract fretboard.
+- **Fretboard decoration:** strings + fret lines + inlay dots, centred vertically in the hero. A SVG `<linearGradient>` mask fades the fretboard out on both left and right edges so it doesn't hard-stop on wide screens.
+- **Inlay dots corrected:** dots were sitting on fret lines (x values matched FRET_XS exactly); moved to midpoints between consecutive frets — 3rd, 5th, 7th, and 9th (double) positions.
+- **Cream glow retained:** radial gradient behind the hero text block keeps the subheading readable over the fretboard decoration.
+
+**Done:**
+- `src/ui/HomePage.tsx` — logo font weight 900 → 700; STRINGS/FRET_XS/MARKER_DOTS constants restored to original centred values; decorative SVG replaced with fretboard-only version wrapped in gradient mask; MARKER_DOTS corrected to inter-fret midpoints; cream glow div added above hero text.
+
+**Open threads:**
+- Phase 6 (save loops / localStorage) still not started.
+- UX polish: stale display on key/template change; Generate → Regenerate after first press.
+- Stretch AI vibe layer still deferred.

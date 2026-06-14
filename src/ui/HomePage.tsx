@@ -75,11 +75,11 @@ const STRINGS = [
 ];
 const FRET_XS = [160, 330, 490, 640, 780, 912, 1036, 1152, 1260, 1360];
 const MARKER_DOTS = [
-  { x: 490, y: 502 },
-  { x: 640, y: 502 },
-  { x: 780, y: 502 },
-  { x: 912, y: 480 },
-  { x: 912, y: 524 },
+  { x: 410, y: 501 },
+  { x: 710, y: 501 },
+  { x: 974, y: 501 },
+  { x: 1206, y: 480 },
+  { x: 1206, y: 522 },
 ];
 
 export function HomePage() {
@@ -94,6 +94,7 @@ export function HomePage() {
   const [progression, setProgression] = useState<Progression | null>(null);
   const [placements, setPlacements] = useState<(PlacedShape | null)[]>([]);
   const [activeChord, setActiveChord] = useState(0);
+  const [viewMode, setViewMode] = useState<"neck" | "chords">("neck");
 
   const handleKeyChange = (newKey: Key) => {
     setKey(newKey);
@@ -181,57 +182,73 @@ export function HomePage() {
           }}
         />
 
-        {/* Decorative fretboard lines */}
+        {/* Decorative fretboard — fades out on both edges */}
         <svg
           className="absolute inset-0 w-full h-full pointer-events-none select-none"
           viewBox="0 0 1440 900"
           preserveAspectRatio="xMidYMid slice"
           aria-hidden="true"
         >
-          <line
-            x1={130}
-            y1={434}
-            x2={130}
-            y2={572}
-            stroke="#8b5e3c"
-            strokeWidth={3.5}
-            opacity={0.12}
-          />
-          {FRET_XS.map((x, i) => (
-            <line
-              key={i}
-              x1={x}
-              y1={434}
-              x2={x}
-              y2={572}
-              stroke="#8b5e3c"
-              strokeWidth={1}
-              opacity={0.08}
-            />
-          ))}
-          {STRINGS.map((s, i) => (
-            <line
-              key={i}
-              x1={0}
-              y1={s.y}
-              x2={1440}
-              y2={s.y}
-              stroke="#c4882a"
-              strokeWidth={s.w}
-              opacity={s.o}
-            />
-          ))}
-          {MARKER_DOTS.map((d, i) => (
-            <circle
-              key={i}
-              cx={d.x}
-              cy={d.y}
-              r={5.5}
-              fill="#c4882a"
-              opacity={0.2}
-            />
-          ))}
+          <defs>
+            <linearGradient id="fretboard-fade" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0%" stopColor="white" stopOpacity={0} />
+              <stop offset="10%" stopColor="white" stopOpacity={1} />
+              <stop offset="90%" stopColor="white" stopOpacity={1} />
+              <stop offset="100%" stopColor="white" stopOpacity={0} />
+            </linearGradient>
+            <mask id="fretboard-mask">
+              <rect width="1440" height="900" fill="url(#fretboard-fade)" />
+            </mask>
+          </defs>
+
+          <g mask="url(#fretboard-mask)">
+            {FRET_XS.map((x, i) => (
+              <line
+                key={i}
+                x1={x}
+                y1={434}
+                x2={x}
+                y2={572}
+                stroke="#8b5e3c"
+                strokeWidth={1}
+                opacity={0.08}
+              />
+            ))}
+            {STRINGS.map((s, i) => (
+              <line
+                key={i}
+                x1={0}
+                y1={s.y}
+                x2={1440}
+                y2={s.y}
+                stroke="#c4882a"
+                strokeWidth={s.w}
+                opacity={s.o}
+              />
+            ))}
+            {MARKER_DOTS.map((d, i) => (
+              <circle
+                key={i}
+                cx={d.x}
+                cy={d.y}
+                r={5.5}
+                fill="#c4882a"
+                opacity={0.2}
+              />
+            ))}
+          </g>
         </svg>
+
+        {/* Cream glow behind text for readability */}
+        <div
+          className="absolute inset-0 pointer-events-none"
+          style={{
+            background:
+              isNarrow
+                ? "radial-gradient(ellipse 95% 45% at 50% 44%, rgba(245,237,226,0.92) 0%, rgba(245,237,226,0.72) 38%, transparent 65%)"
+                : "radial-gradient(ellipse 55% 50% at 50% 44%, rgba(245,237,226,0.92) 0%, rgba(245,237,226,0.72) 38%, transparent 65%)",
+          }}
+        />
 
         {/* Hero text */}
         <div className="relative z-10 text-center w-full px-8">
@@ -253,7 +270,7 @@ export function HomePage() {
             style={{
               fontFamily: "'Fraunces', Georgia, serif",
               fontSize: "clamp(4.5rem, 13vw, 9.5rem)",
-              fontWeight: 900,
+              fontWeight: 700,
               lineHeight: 1,
               letterSpacing: "-0.02em",
               marginBottom: "1.5rem",
@@ -268,15 +285,29 @@ export function HomePage() {
               fontFamily: "'Lora', Georgia, serif",
               fontStyle: "italic",
               color: "#7a5030",
-              fontSize: "1.35rem",
+              fontSize: "1.9rem",
               fontWeight: 400,
-              maxWidth: "26rem",
+              maxWidth: "28rem",
+              margin: "0 auto 0.75rem",
+              lineHeight: 1.5,
+            }}
+          >
+            Rote learning made beautiful.
+          </p>
+          <p
+            style={{
+              fontFamily: "'Lora', Georgia, serif",
+              color: "#9a7a58",
+              fontSize: "1.3rem",
+              fontWeight: 400,
+              maxWidth: "28rem",
               margin: "0 auto 2.75rem",
               lineHeight: 1.7,
             }}
           >
-            Pick a key. Pick a vibe. See every chord, exactly where it lives on
-            the neck.
+            Generate CAGED progressions.
+            <br />
+            Practice instantly.
           </p>
 
           <a
@@ -440,7 +471,7 @@ export function HomePage() {
       <section
         id="app"
         style={{ background: "#f4ede0" }}
-        className="py-24 px-8"
+        className="py-24 px-4 md:px-8"
       >
         <div className="max-w-5xl mx-auto flex flex-col gap-8">
           {/* Section header */}
@@ -485,19 +516,23 @@ export function HomePage() {
               {/* Key selector */}
               <div
                 style={{
-                  padding: "28px 32px",
+                  padding: isNarrow ? "20px 16px" : "28px 32px",
                   borderRight: "1px solid #e8dcc8",
                   borderBottom: "1px solid #e8dcc8",
                 }}
                 className="md:border-b-0"
               >
-                <KeySelector value={key} onChange={handleKeyChange} />
+                <KeySelector
+                  value={key}
+                  onChange={handleKeyChange}
+                  compact={isNarrow}
+                />
               </div>
 
               {/* Progression selector */}
               <div
                 style={{
-                  padding: "28px 32px",
+                  padding: isNarrow ? "20px 16px" : "28px 32px",
                   borderBottom: "1px solid #e8dcc8",
                 }}
               >
@@ -510,7 +545,12 @@ export function HomePage() {
             </div>
 
             {/* Generate — full-width bottom strip */}
-            <div style={{ padding: "20px 32px", background: "#f5ede0" }}>
+            <div
+              style={{
+                padding: isNarrow ? "16px" : "20px 32px",
+                background: "#f5ede0",
+              }}
+            >
               <button
                 onClick={() => {
                   const prog = realizeProgression(template, key);
@@ -567,29 +607,120 @@ export function HomePage() {
             </div>
           </div>
 
-          {/* Full neck — appears after generating */}
+          {/* Output — appears after generating */}
           {progression && (
-            <div
-              style={{
-                background: "#f5ede2",
-                border: "1px solid #d9cbb0",
-                borderRadius: 20,
-                padding: 24,
-                boxShadow:
-                  "0 2px 16px rgba(45,26,14,0.08), inset 0 1px 0 rgba(255,255,255,0.7)",
-              }}
-            >
-              <FullNeckDiagram
-                orientation={isNarrow ? "portrait" : "landscape"}
-                placements={placements}
-                activeIndex={activeChord}
-                onActiveChange={setActiveChord}
-                chordLabels={progression.chords.map((chord, i) => ({
-                  numeral: progression.template.numerals[i],
-                  name: chordLabel(chord),
-                  shapeName: placements[i]?.shape.name,
-                }))}
-              />
+            <div className="flex flex-col gap-4">
+              {/* View toggle */}
+              <div style={{ display: "flex", justifyContent: "flex-end" }}>
+                <div
+                  style={{
+                    display: "flex",
+                    background: "#2d1a0d",
+                    borderRadius: 10,
+                    padding: 3,
+                  }}
+                >
+                  {(["neck", "chords"] as const).map((mode) => (
+                    <button
+                      key={mode}
+                      onClick={() => setViewMode(mode)}
+                      style={{
+                        padding: "0.4rem 1.1rem",
+                        borderRadius: 7,
+                        border: "none",
+                        cursor: "pointer",
+                        fontSize: "0.8125rem",
+                        fontWeight: viewMode === mode ? 700 : 400,
+                        background:
+                          viewMode === mode
+                            ? "linear-gradient(135deg, #e8b86d 0%, #c4882a 100%)"
+                            : "transparent",
+                        color: viewMode === mode ? "#1c0f06" : "#9a7a58",
+                        transition: "all 0.15s ease",
+                        fontFamily: "'Lora', serif",
+                        letterSpacing: "0.04em",
+                        textTransform: "capitalize",
+                      }}
+                    >
+                      {mode === "neck" ? "Neck" : "Chords"}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {viewMode === "neck" ? (
+                <div
+                  style={{
+                    background: "#f5ede2",
+                    border: "1px solid #d9cbb0",
+                    borderRadius: 20,
+                    padding: 24,
+                    boxShadow:
+                      "0 2px 16px rgba(45,26,14,0.08), inset 0 1px 0 rgba(255,255,255,0.7)",
+                  }}
+                >
+                  <FullNeckDiagram
+                    orientation={isNarrow ? "portrait" : "landscape"}
+                    placements={placements}
+                    activeIndex={activeChord}
+                    onActiveChange={setActiveChord}
+                    chordLabels={progression.chords.map((chord, i) => ({
+                      numeral: progression.template.numerals[i],
+                      name: chordLabel(chord),
+                      shapeName: placements[i]?.shape.name,
+                    }))}
+                  />
+                </div>
+              ) : (
+                <div className="flex flex-wrap justify-center gap-4">
+                  {progression.chords.map((chord, i) => {
+                    const ps = placements[i];
+                    if (!ps) return null;
+                    return (
+                      <div
+                        key={i}
+                        style={{
+                          background: "#faf6ee",
+                          border: "1px solid #d9cbb0",
+                          borderRadius: 16,
+                          padding: "16px 14px 12px",
+                          display: "flex",
+                          flexDirection: "column",
+                          alignItems: "center",
+                          gap: 8,
+                          boxShadow: "0 1px 6px rgba(45,26,14,0.07)",
+                        }}
+                      >
+                        <div style={{ textAlign: "center" }}>
+                          <div
+                            style={{
+                              fontFamily: "'Lora', serif",
+                              fontSize: "0.7rem",
+                              color: "#b89070",
+                              letterSpacing: "0.1em",
+                              textTransform: "uppercase",
+                            }}
+                          >
+                            {progression.template.numerals[i]}
+                          </div>
+                          <div
+                            style={{
+                              fontFamily: "'Fraunces', serif",
+                              fontWeight: 700,
+                              fontSize: "1.1rem",
+                              color: "#2d1a0e",
+                              lineHeight: 1.2,
+                            }}
+                          >
+                            {chordLabel(chord)}
+                          </div>
+                        </div>
+                        <FretboardDiagram placedShape={ps} showLabel={false} />
+                      </div>
+                    );
+                  })}
+                </div>
+              )}
             </div>
           )}
         </div>
@@ -600,7 +731,7 @@ export function HomePage() {
         style={{ background: "#1c0e05", borderTop: "1px solid #2d1a0d" }}
         className="py-10 px-8"
       >
-        <div className="max-w-3xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div className="max-w-3xl mx-auto flex flex-col items-center gap-2">
           <span
             style={{
               fontFamily: "'Fraunces', Georgia, serif",
@@ -613,16 +744,14 @@ export function HomePage() {
             Fret<span style={{ color: "#c4882a" }}>Flow</span>
           </span>
           <p
-            className="text-xs text-center sm:text-right leading-relaxed"
+            className="text-xs text-center leading-relaxed"
             style={{
               color: "#7a5a3a",
               fontFamily: "'Lora', serif",
               fontStyle: "italic",
             }}
           >
-            Deterministic CAGED practice tool.
-            <br />
-            Built with React + Vite — all music theory runs client-side.
+            A deterministic guitar practice tool.
           </p>
         </div>
       </footer>
