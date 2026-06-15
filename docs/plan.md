@@ -30,8 +30,7 @@
 
 ---
 
-## Phase 8 — Write-up
+## Phase 8 — Ship
 
 - [x] Deploy to `fretflow.ca` (GitHub Pages). ✅
 - [x] `docs/ai-usage.md` — token/cost breakdown with charts. ✅
-- [ ] `WRITEUP.md` — architecture, trust boundary, honest AI-collaboration story (caught mistakes, CAGED verification, one-step-at-a-time process).
