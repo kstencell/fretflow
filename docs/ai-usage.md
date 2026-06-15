@@ -53,7 +53,7 @@ makes the whole system low-friction enough to actually use.
 | **Total** | **1,530** | **$79.91** | |
 
 ```mermaid
-%%{init: {'theme': 'default', 'themeVariables': {'pie1': '#4285F4', 'pie2': '#EA4335', 'pie3': '#FBBC05', 'pie4': '#34A853', 'pie5': '#FF6D00', 'pie6': '#9B59B6'}}}%%
+%%{init: {'theme': 'default', 'themeVariables': {'pie1': '#4285F4', 'pie2': '#EA4335', 'pie3': '#FBBC05', 'pie4': '#34A853', 'pie5': '#FF6D00', 'pie6': '#9B59B6', 'pieTitleTextColor': '#ffffff', 'pieSectionTextColor': '#ffffff', 'pieLegendTextColor': '#ffffff'}}}%%
 pie title AI spend by bucket
     "planning-docs" : 41.88
     "ui" : 30.26
@@ -72,7 +72,7 @@ pie title AI spend by bucket
 | **All-in** | **$79.91** | |
 
 ```mermaid
-%%{init: {'theme': 'default', 'themeVariables': {'pie1': '#FBBC05', 'pie2': '#4285F4'}}}%%
+%%{init: {'theme': 'default', 'themeVariables': {'pie1': '#FBBC05', 'pie2': '#4285F4', 'pieTitleTextColor': '#ffffff', 'pieSectionTextColor': '#ffffff', 'pieLegendTextColor': '#ffffff'}}}%%
 pie title Work vs. context cost
     "context (cache)" : 51.38
     "work (tokens)" : 28.53
