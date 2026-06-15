@@ -50,3 +50,5 @@
 {"ts": "2026-06-15T01:05:00Z", "bucket": "ui", "note": "GitHub link in footer + FretboardDiagram fret label spacing fix"}
 {"ts": "2026-06-15T01:13:39Z", "bucket": "planning-docs", "note": "clean-up"}
 {"ts": "2026-06-15T03:11:36Z", "bucket": "planning-docs", "note": "clean-up"}
+{"ts":"2026-06-15T03:14:51Z","bucket":"planning-docs","note":"README: Working with Claude section, AI usage section, Python note"}
+{"ts": "2026-06-15T03:37:19Z", "bucket": "planning-docs", "note": "clean-up"}

@@ -87,3 +87,12 @@
 - `docs/journal.md` — compacted from 477 lines to ~70.
 - `docs/ai-usage.marks.jsonl`, `mark.py`, `usage_report.py` — renamed `scaffolding` → `tooling`.
 - `docs/ai-usage.md` — updated numbers after new usage report run ($83.17 total).
+
+## 2026-06-15 — README Claude Code section + AI usage callout
+
+**Focus:** Document how to use `/clean-up` effectively and surface the AI usage tracking in the README.
+
+**Done:**
+- `README.md` — added "Working with Claude Code" section: `/clean-up` usage guide, Python 3 host requirement and why (Claude runs on host, not devcontainer).
+- `README.md` — added "AI usage" section above Architecture, linking to `docs/ai-usage.md`.
+- `docs/ai-usage.md` — updated numbers ($85.01 total, 1,690 messages).

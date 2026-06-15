@@ -12,18 +12,18 @@ Token and cost breakdown for the FretFlow build, attributed to six coarse bucket
 
 | Bucket                   |  Messages |   All-in $ | Share |
 | ------------------------ | --------: | ---------: | ----: |
-| Planning & Documentation |       781 |     $45.14 |   54% |
+| Planning & Documentation |       857 |     $47.00 |   55% |
 | UI & Design              |       591 |     $30.26 |   36% |
 | Testing                  |        59 |      $3.34 |    4% |
 | App Logic                |        66 |      $1.53 |    2% |
 | Tooling & Setup          |        81 |      $1.48 |    2% |
 | Debugging                |        36 |      $1.40 |    2% |
-| **Total**                | **1,614** | **$83.17** |       |
+| **Total**                | **1,690** | **$85.01** |       |
 
 ```mermaid
 %%{init: {'themeVariables': {'pie1': '#4285F4', 'pie2': '#EA4335', 'pie3': '#FBBC05', 'pie4': '#34A853', 'pie5': '#FF6D00', 'pie6': '#9B59B6'}}}%%
 pie title AI spend by bucket
-    "Planning & Documentation" : 45.14
+    "Planning & Documentation" : 47.00
     "UI & Design" : 30.26
     "Testing" : 3.34
     "App Logic" : 1.53
@@ -35,15 +35,15 @@ pie title AI spend by bucket
 
 |                              |          $ | Share |
 | ---------------------------- | ---------: | ----: |
-| Context (cache reads/writes) |     $53.48 |   64% |
-| Work (fresh input + output)  |     $29.69 |   36% |
-| **All-in**                   | **$83.17** |       |
+| Context (cache reads/writes) |     $54.90 |   65% |
+| Work (fresh input + output)  |     $30.11 |   35% |
+| **All-in**                   | **$85.01** |       |
 
 ```mermaid
 %%{init: {'themeVariables': {'pie1': '#FBBC05', 'pie2': '#4285F4'}}}%%
 pie title Work vs. context cost
-    "context (cache)" : 53.48
-    "work (tokens)" : 29.69
+    "context (cache)" : 54.90
+    "work (tokens)" : 30.11
 ```
 
 Generating tokens was cheap; carrying a growing context window session after session
@@ -52,7 +52,7 @@ though cache dominates the bill, it's already heavily discounted compared to fre
 
 ## What the numbers say
 
-Planning and docs consumed the most tokens by a wide margin (54%), mostly because
+Planning and docs consumed the most tokens by a wide margin (55%), mostly because
 every session starts by reloading the full design notes, journal, and codebase state
 into context. The UI bucket (36%) reflects that the visual design went through several
 full rewrites. The theory core (app-logic + testing combined, ~6%) is small because
