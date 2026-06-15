@@ -44,38 +44,38 @@ makes the whole system low-friction enough to actually use.
 
 | Bucket | Messages | All-in $ | Share |
 |---|--:|--:|--:|
-| planning-docs | 697 | $41.88 | 52% |
-| ui | 591 | $30.26 | 38% |
-| testing | 59 | $3.34 | 4% |
-| app-logic | 66 | $1.53 | 2% |
-| scaffolding | 81 | $1.48 | 2% |
-| debugging | 36 | $1.40 | 2% |
-| **Total** | **1,530** | **$79.91** | |
+| Planning & Documentation | 781 | $45.14 | 54% |
+| UI & Design | 591 | $30.26 | 36% |
+| Testing | 59 | $3.34 | 4% |
+| App Logic | 66 | $1.53 | 2% |
+| Tooling & Setup | 81 | $1.48 | 2% |
+| Debugging | 36 | $1.40 | 2% |
+| **Total** | **1,614** | **$83.17** | |
 
 ```mermaid
 %%{init: {'themeVariables': {'pie1': '#4285F4', 'pie2': '#EA4335', 'pie3': '#FBBC05', 'pie4': '#34A853', 'pie5': '#FF6D00', 'pie6': '#9B59B6'}}}%%
 pie title AI spend by bucket
-    "planning-docs" : 41.88
-    "ui" : 30.26
-    "testing" : 3.34
-    "app-logic" : 1.53
-    "scaffolding" : 1.48
-    "debugging" : 1.40
+    "Planning & Documentation" : 45.14
+    "UI & Design" : 30.26
+    "Testing" : 3.34
+    "App Logic" : 1.53
+    "Tooling & Setup" : 1.48
+    "Debugging" : 1.40
 ```
 
 ## Work vs. context
 
 | | $ | Share |
 |---|--:|--:|
-| Context (cache reads/writes) | $51.38 | 64% |
-| Work (fresh input + output) | $28.53 | 36% |
-| **All-in** | **$79.91** | |
+| Context (cache reads/writes) | $53.48 | 64% |
+| Work (fresh input + output) | $29.69 | 36% |
+| **All-in** | **$83.17** | |
 
 ```mermaid
 %%{init: {'themeVariables': {'pie1': '#FBBC05', 'pie2': '#4285F4'}}}%%
 pie title Work vs. context cost
-    "context (cache)" : 51.38
-    "work (tokens)" : 28.53
+    "context (cache)" : 53.48
+    "work (tokens)" : 29.69
 ```
 
 Generating tokens was cheap; carrying a growing context window session after session
@@ -84,8 +84,8 @@ though cache dominates the bill, it's already heavily discounted compared to fre
 
 ## What the numbers say
 
-Planning and docs consumed the most tokens by a wide margin (52%), mostly because
+Planning and docs consumed the most tokens by a wide margin (54%), mostly because
 every session starts by reloading the full design notes, journal, and codebase state
-into context. The UI bucket (38%) reflects that the visual design went through several
+into context. The UI bucket (36%) reflects that the visual design went through several
 full rewrites. The theory core (app-logic + testing combined, ~6%) is small because
 TDD kept each step tight and well-scoped.

@@ -168,22 +168,16 @@ Each phase = a legible commit (or few). Keep history clean — it's graded evide
 - **Quality-specific shapes:** `CagedShape.quality: 'major' | 'minor'`. Diminished shapes skipped for v1.
 - **Gm shape:** B string omitted (minor third unreachable in open position).
 
-## 9. Still open
+## 9. Locked UI constants (reference)
 
-- **Deploy target (locked 2026-06-14): GitHub Pages** — `gh-pages` branch, custom domain `fretflow.ca`. `CNAME` in `public/`. No `base` path needed (custom domain serves at root). BrowserRouter kept; `/all-chords` 404s on prod (acceptable — dev-only route).
-- **CAGED shape data verified ✅** — Karl completed the pass; shapes look correct. `VerificationPage` now lives at `/all-chords` as a permanent diagnostic tool.
-- **UI theme (redesigned 2026-06-12):** warm acoustic palette — cream `#f4ede0` background, walnut `#2d1a0e` dark sections, brass `#c4882a` accent. Fonts: Fraunces **700** display (logo/headings) + Lora serif body. Logo font trialled against Playfair Display, Cormorant Garamond, Yeseva One — Fraunces won; both hero h1 and footer wordmark now unified at weight 700 (down from 900).
-- **Hero background decoration (locked 2026-06-14):** abstract fretboard — 6 strings + fret lines + inlay dots, vertically centred. SVG `<linearGradient>` mask fades both edges (0→10% and 90→100%) so it dissolves cleanly on wide screens. Cream radial glow behind the text block ensures subheading readability; glow widens to `95%` on narrow screens via `isNarrow`. Inlay dots sit at inter-fret midpoints (3rd, 5th, 7th, 9th double). A full guitar silhouette (body + headstock) was attempted and rejected — SVG bezier curves without visual tooling produced unrecognisable shapes.
-- **Hero copy (locked 2026-06-14):** tagline = *"Rote learning made beautiful."* (Lora italic, 1.9rem); descriptor = *"Generate CAGED progressions. / Practice instantly."* (1.3rem, muted). Footer: FretFlow wordmark + tagline stacked and centred.
-- **Chord view toggle (2026-06-14):** "Neck / Chords" pill toggle above generated output. Neck = `FullNeckDiagram`; Chords = flex-wrap grid of 4 `FretboardDiagram` cards with numeral + chord name label. `viewMode` persists across regenerates.
-- **Mobile practice tool (2026-06-14):** `KeySelector` `compact` prop shrinks buttons to 40/36px with gap 6px on narrow screens. App section `px-4 md:px-8`; card column padding halved on narrow. Fits 7-note row on 390px screen.
-- **Role-based dot colors (locked 2026-06-12):** root = steel blue `#5896a8` + amber-gold `#f59e0b` stroke; third = warm ivory `#c8b888`; fifth = amber gold `#d4862a`. Applied identically in both `FretboardDiagram` and `FullNeckDiagram`. Inactive dots: `#5a3c22` at 0.7 opacity.
-- **Fretboard materials (locked 2026-06-12):** rosewood gradient (`#7A4828→#4E2810→#7A4828`), silver-grey frets `#9E9C96`, silver strings `#C8C8C4`, ivory nut `#F0E5B8`, DOT_R=9. Both fretboard components share these constants exactly.
-- **Full-neck diagram (updated 2026-06-12):** `FullNeckDiagram` — rosewood SVG neck, all progression chords overlaid simultaneously, role-based active dot colors (root/third/fifth), inactive gray at 0.7 opacity with note names, chord selector buttons (numeral + chord name + CAGED shape name). Container: light cream `#f5ede2`. Responsive: landscape ≥768px, portrait <768px.
-- **KeySelector (redesigned 2026-06-12):** two-row fret-dot grid (naturals row + accidentals row) replacing earlier piano-key layout. Animated sliding brass pill for Major/minor toggle.
-- **RoleLegend (new 2026-06-12):** `src/ui/RoleLegend.tsx` — shared component, SVG circles at DOT_R=9 (PAD=3 to prevent root stroke clipping), used in both CAGED explainer section and below full neck.
+- **Palette:** cream `#f4ede0` bg, walnut `#2d1a0e` dark sections, brass `#c4882a` accent.
+- **Fonts:** Fraunces 700 display, Lora serif body.
+- **Tagline:** *"Rote learning made beautiful."*
+- **Dot colors:** root = `#5896a8` + `#f59e0b` stroke; third = `#c8b888`; fifth = `#d4862a`. Inactive: `#5a3c22` @ 0.7 opacity.
+- **Fretboard materials:** rosewood `#7A4828→#4E2810→#7A4828`, frets `#9E9C96`, strings `#C8C8C4`, nut `#F0E5B8`, DOT_R=9.
+- **Deploy:** GitHub Pages, `fretflow.ca`. `/all-chords` is dev-only (404s on prod — acceptable).
 
-## 9. AI usage tracking (meta-tooling)
+## 10. AI usage tracking (meta-tooling)
 
 A side goal that mirrors Origin's own thesis: make *how much AI effort went where*
 observable. We attribute Claude Code's real token usage (read from the session
@@ -199,7 +193,7 @@ logic and debugging"), not exact accounting. Imperfect bucketing is fine.
 | bucket | covers |
 |---|---|
 | `planning-docs` | design decisions, journaling, writing/updating docs, the working agreement |
-| `scaffolding` | devcontainer, installing tools/deps, build config, CI/GitHub Actions, repo setup |
+| `tooling` | devcontainer, installing tools/deps, build config, CI/GitHub Actions, repo setup |
 | `app-logic` | schemas, types, classes, core domain logic (the SPA's "backend") |
 | `ui` | components, layout, styling, visual design |
 | `testing` | writing and running tests |
@@ -247,4 +241,4 @@ was *active* at each message's timestamp. The active bucket is set by **marks**.
 - The clean-up skill's **Step 0** reconstructs the conversation's marks from hindsight
   (then marks the clean-up work itself `planning-docs`) — the reliable place to set
   boundaries, since live marking gets forgotten.
-- Not built yet: the persisted `docs/ai-usage.md` ledger (renderer + rollup).
+- `docs/ai-usage.md` — live ledger; refreshed automatically by `/clean-up` Step 1.

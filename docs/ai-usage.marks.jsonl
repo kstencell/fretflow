@@ -2,9 +2,9 @@
 {"ts": "2026-06-11T19:29:28Z", "bucket": "planning-docs", "note": "build the mark-dropping mechanism"}
 {"ts": "2026-06-11T20:03:50Z", "bucket": "planning-docs", "note": "clean-up"}
 {"ts": "2026-06-11T20:10:00Z", "bucket": "planning-docs", "note": "project orientation, devcontainer scope discussion"}
-{"ts": "2026-06-11T20:20:00Z", "bucket": "scaffolding", "note": "devcontainer setup"}
+{"ts": "2026-06-11T20:20:00Z", "bucket": "tooling", "note": "devcontainer setup"}
 {"ts": "2026-06-11T20:41:01Z", "bucket": "planning-docs", "note": "clean-up"}
-{"ts": "2026-06-11T20:42:00Z", "bucket": "scaffolding", "note": "vite scaffold + tailwind + vitest setup"}
+{"ts": "2026-06-11T20:42:00Z", "bucket": "tooling", "note": "vite scaffold + tailwind + vitest setup"}
 {"ts": "2026-06-11T21:05:00Z", "bucket": "debugging", "note": "build error: vitest/config import fix"}
 {"ts": "2026-06-11T21:15:12Z", "bucket": "planning-docs", "note": "clean-up"}
 {"ts": "2026-06-11T21:20:00Z", "bucket": "app-logic", "note": "Phase 0.5 type contracts: Note, Key, Chord, Progression + progressions catalog"}
@@ -43,9 +43,10 @@
 {"ts": "2026-06-14T23:52:47Z", "bucket": "ui", "note": "mobile fix, chord view toggle, hero copy, footer layout"}
 {"ts": "2026-06-14T23:52:57Z", "bucket": "planning-docs", "note": "clean-up"}
 {"ts": "2026-06-14T23:53:00Z", "bucket": "planning-docs", "note": "deployment planning — GitHub Pages vs Vercel, HashRouter vs BrowserRouter, custom domain, full deploy sequence"}
-{"ts": "2026-06-14T23:57:00Z", "bucket": "scaffolding", "note": "gh-pages package + deploy scripts + CNAME file + npm run deploy + GitHub Pages settings"}
+{"ts": "2026-06-14T23:57:00Z", "bucket": "tooling", "note": "gh-pages package + deploy scripts + CNAME file + npm run deploy + GitHub Pages settings"}
 {"ts": "2026-06-15T00:05:00Z", "bucket": "ui", "note": "site metadata — favicon SVG, title, meta description, OG tags, theme-color, apple-touch-icon PNG"}
 {"ts": "2026-06-15T00:58:51Z", "bucket": "planning-docs", "note": "clean-up"}
 {"ts": "2026-06-15T01:00:00Z", "bucket": "planning-docs", "note": "orientation: reading CLAUDE.md, design-notes, journal"}
 {"ts": "2026-06-15T01:05:00Z", "bucket": "ui", "note": "GitHub link in footer + FretboardDiagram fret label spacing fix"}
 {"ts": "2026-06-15T01:13:39Z", "bucket": "planning-docs", "note": "clean-up"}
+{"ts": "2026-06-15T03:11:36Z", "bucket": "planning-docs", "note": "clean-up"}

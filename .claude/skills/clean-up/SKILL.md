@@ -18,7 +18,7 @@ You have hindsight of the whole conversation now — use it to lay down the buck
 boundaries that should have been marked live. Two parts:
 
 1. **The conversation's work.** It may span several buckets (`planning-docs`,
-   `scaffolding`, `app-logic`, `ui`, `testing`, `debugging`). For each shift that
+   `tooling`, `app-logic`, `ui`, `testing`, `debugging`). For each shift that
    actually happened, drop a mark at roughly when it happened, in order. `mark.py`
    stamps `ts` as *now* (no backdate flag), so to place an earlier boundary, append
    the JSONL line by hand with the right `ts` — order matters, not exact seconds. Skip
@@ -30,7 +30,34 @@ boundaries that should have been marked live. Two parts:
 python3 .claude/skills/clean-up/mark.py planning-docs "clean-up"
 ```
 
-## Step 1 — Append a journal entry
+## Step 1 — Refresh the AI usage ledger
+
+Run the usage report to get the latest numbers:
+
+```
+python3 .claude/skills/clean-up/usage_report.py
+```
+
+Then update `docs/ai-usage.md` in place. The file's structure and prose don't
+change — only the numbers. Specifically:
+
+1. **Bucket table** — combine any per-model rows for the same bucket into one
+   (e.g. two `planning-docs` rows sum into one). Recompute each bucket's share
+   as a percentage of the new all-in total. Use the pretty names already in the
+   table (`Planning & Documentation`, `UI & Design`, etc.).
+2. **Bucket pie chart** — update the numeric values to match the new combined
+   per-bucket totals.
+3. **Work vs. context table** — update Work $, Context $, All-in $, and the
+   share percentages.
+4. **Work vs. context pie chart** — update the two numeric values.
+5. **"What the numbers say" section** — update any percentages or figures cited
+   in the narrative. Rewrite a sentence only if the numbers changed enough that
+   the old sentence is now wrong; don't polish prose for its own sake.
+
+Do not change the file's section order, headings, or any prose that doesn't
+reference numbers.
+
+## Step 2 — Append a journal entry
 
 Append (never overwrite) one entry to `docs/journal.md`. Create the file with an
 `# FretFlow — Conversation Journal` heading if it doesn't exist. Newest entries go
@@ -48,24 +75,34 @@ at the bottom. Entry format:
 **Open threads:** what's unresolved or deferred. Omit if none.
 ```
 
-Keep it tight — a future reader skims this, they don't re-read the transcript. No
-verbatim dumps. Use today's date from the environment context.
+**Brevity rules — strictly enforced:**
+- Each bullet is one line. No sub-bullets, no elaboration.
+- The whole entry should fit in ~15 lines. If you're over, cut.
+- No restating what the code already shows. "Added `FretboardDiagram.tsx`" is enough — don't describe what it does.
+- No hedging phrases ("we discussed", "we explored", "it was noted that"). State facts only.
 
-## Step 2 — Review and update project docs
+Use today's date from the environment context.
 
-Make the repo's docs reflect reality after this conversation. Check, and update only
-where the conversation actually changed something:
+## Step 3 — Review and update project docs
 
-- `docs/design-notes.md` — decisions, scope, plan. Mark resolved items, add new ones.
-- `CLAUDE.md` — only if our working agreement itself changed.
-- `README.md` — if it exists and is now out of date.
+Make the repo's docs reflect reality. **Cut as much as you add.** Docs that are too
+long waste tokens on every future conversation load — stale content is strictly worse
+than no content.
+
+- `docs/plan.md` — tick off completed items, collapse done phases to a single ✅ line,
+  remove detail that's no longer actionable. Keep detail only for what's still TODO.
+- `docs/design-notes.md` — mark resolved items ✅, add new decisions, and **delete or
+  correct anything that is now wrong, deprecated, or superseded**. If a section no
+  longer reflects how the code actually works, fix it or remove it.
+- `CLAUDE.md` — only if the working agreement itself changed.
+- `README.md` — if it's now out of date.
 - Long-term memory (`.../memory/`) — only if a durable, non-obvious fact emerged that
-  isn't already captured in the repo's own docs. Don't duplicate what docs already own.
+  isn't already in the repo docs. Don't duplicate.
 
-Be surgical: edit what changed, don't rewrite what didn't. If nothing needs updating,
-say so explicitly rather than inventing changes.
+If nothing needs updating in a given file, skip it and say so. Don't touch files just
+to show activity.
 
-## Step 3 — Produce the handoff prompt
+## Step 4 — Produce the handoff prompt
 
 Output a fenced code block Karl can paste into a fresh conversation. It must let the
 next Claude get up to speed by reading the repo, not by re-reading this chat. Include:

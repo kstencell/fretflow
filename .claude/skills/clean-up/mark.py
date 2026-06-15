@@ -22,7 +22,7 @@ from pathlib import Path
 REPO_ROOT = Path(__file__).resolve().parents[3]
 MARKS_FILE = REPO_ROOT / "docs" / "ai-usage.marks.jsonl"
 
-BUCKETS = ["planning-docs", "scaffolding", "app-logic", "ui", "testing", "debugging"]
+BUCKETS = ["planning-docs", "tooling", "app-logic", "ui", "testing", "debugging"]
 
 
 def utc_now_iso():

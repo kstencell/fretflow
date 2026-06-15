@@ -25,7 +25,7 @@ TRANSCRIPTS_DIR = (
     Path.home() / ".claude" / "projects" / str(REPO_ROOT).replace("/", "-")
 )
 
-BUCKETS = ["planning-docs", "scaffolding", "app-logic", "ui", "testing", "debugging"]
+BUCKETS = ["planning-docs", "tooling", "app-logic", "ui", "testing", "debugging"]
 UNATTRIBUTED = "unattributed"  # messages before the first mark
 
 
