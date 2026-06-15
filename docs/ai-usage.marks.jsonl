@@ -40,3 +40,5 @@
 {"ts": "2026-06-12T18:29:00Z", "bucket": "planning-docs", "note": "clean-up"}
 {"ts": "2026-06-14T20:11:49Z", "bucket": "ui", "note": "font exploration + hero section redesign (guitar illustration attempts, fretboard decoration)"}
 {"ts": "2026-06-14T22:52:00Z", "bucket": "planning-docs", "note": "clean-up"}
+{"ts": "2026-06-14T23:52:47Z", "bucket": "ui", "note": "mobile fix, chord view toggle, hero copy, footer layout"}
+{"ts": "2026-06-14T23:52:57Z", "bucket": "planning-docs", "note": "clean-up"}

@@ -407,3 +407,24 @@ palette, fretboard materials, role-based dot colors, and component unification.
 - Phase 6 (save loops / localStorage) still not started.
 - UX polish: stale display on key/template change; Generate → Regenerate after first press.
 - Stretch AI vibe layer still deferred.
+
+## 2026-06-14 — Mobile polish, chord view toggle, hero copy
+
+**Focus:** Mobile layout fixes to the practice tool section, a new chord card view, and hero copy/styling updates.
+
+**Decisions:**
+- **Mobile key selector:** `KeySelector` gets a `compact?: boolean` prop — naturals shrink from 44→40px, accidentals 40→36px, gap 8→6px. `HomePage` passes `compact={isNarrow}`. App section padding reduced from `px-8` to `px-4 md:px-8`; card column padding halved on narrow screens. Together these fit the 7-note row on a 390px screen with ~10px to spare.
+- **Chord view toggle:** a "Neck / Chords" pill toggle appears above the generated output. "Neck" shows `FullNeckDiagram` as before; "Chords" shows a `flex-wrap` grid of 4 `FretboardDiagram` cards, each labelled with the Roman numeral + chord name. `viewMode` state persists across Regenerate presses so the user's preference sticks.
+- **Hero copy:** replaced the three-line "Pick a key…" tagline with two lines — `"Rote learning made beautiful."` (italic, 1.9rem, walnut) as the emotional hook, and `"Generate CAGED progressions. / Practice instantly."` (1.3rem, muted) as the descriptor. "Rote learning made beautiful" is the locked tagline.
+- **Hero cream glow:** widened on mobile from `55%` to `95%` horizontal radius (using `isNarrow`) so the glow covers the full text block on narrow screens.
+- **Footer:** changed from `flex-row justify-between` to `flex-col items-center` — tagline now sits below the FretFlow wordmark, both centred.
+
+**Done:**
+- `src/ui/KeySelector.tsx` — `compact` prop; smaller button/font sizes in compact mode.
+- `src/ui/HomePage.tsx` — section padding mobile fix; card padding via `isNarrow`; `viewMode` state + Neck/Chords toggle + chord card grid; hero copy rewrite; cream glow responsive; footer layout centred.
+
+**Open threads:**
+- Phase 6 (save loops / localStorage) still not started.
+- UX polish: stale display on key/template change; Generate → Regenerate after first press.
+- Stretch AI vibe layer still deferred.
+- **Next agreed focus: deployment.**
