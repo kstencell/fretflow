@@ -42,3 +42,10 @@
 {"ts": "2026-06-14T22:52:00Z", "bucket": "planning-docs", "note": "clean-up"}
 {"ts": "2026-06-14T23:52:47Z", "bucket": "ui", "note": "mobile fix, chord view toggle, hero copy, footer layout"}
 {"ts": "2026-06-14T23:52:57Z", "bucket": "planning-docs", "note": "clean-up"}
+{"ts": "2026-06-14T23:53:00Z", "bucket": "planning-docs", "note": "deployment planning — GitHub Pages vs Vercel, HashRouter vs BrowserRouter, custom domain, full deploy sequence"}
+{"ts": "2026-06-14T23:57:00Z", "bucket": "scaffolding", "note": "gh-pages package + deploy scripts + CNAME file + npm run deploy + GitHub Pages settings"}
+{"ts": "2026-06-15T00:05:00Z", "bucket": "ui", "note": "site metadata — favicon SVG, title, meta description, OG tags, theme-color, apple-touch-icon PNG"}
+{"ts": "2026-06-15T00:58:51Z", "bucket": "planning-docs", "note": "clean-up"}
+{"ts": "2026-06-15T01:00:00Z", "bucket": "planning-docs", "note": "orientation: reading CLAUDE.md, design-notes, journal"}
+{"ts": "2026-06-15T01:05:00Z", "bucket": "ui", "note": "GitHub link in footer + FretboardDiagram fret label spacing fix"}
+{"ts": "2026-06-15T01:13:39Z", "bucket": "planning-docs", "note": "clean-up"}

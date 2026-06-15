@@ -428,3 +428,49 @@ palette, fretboard materials, role-based dot colors, and component unification.
 - UX polish: stale display on key/template change; Generate → Regenerate after first press.
 - Stretch AI vibe layer still deferred.
 - **Next agreed focus: deployment.**
+
+## 2026-06-15 — Footer GitHub link + fretboard diagram spacing fix
+
+**Focus:** Two small UI polish items on the deployed site.
+
+**Decisions:**
+- GitHub attribution link lives in the **footer** (below the tagline), not the hero — it's a quiet credential, not a call to action.
+
+**Done:**
+- `src/ui/HomePage.tsx` — added "An open-source project by Karl Stencell" link with inline GitHub SVG icon at the bottom of the footer, in muted walnut Lora serif, linking to `https://github.com/kstencell/fretflow`. Fades up on hover.
+- `src/ui/FretboardDiagram.tsx` — `PAD_BOTTOM` 20 → 28; fret label `y` changed from `+13` to `+DOT_R+12` (= +21) so it clears the bottom-string dot (which extends `DOT_R=9` px below the string line) by a clean 12px gap. Fixes overlap on barre chord diagrams in chord view.
+
+**Open threads:**
+- Phase 6 (save loops / localStorage) still not started — agreed next focus.
+- UX polish carry-overs: stale display on key/template change; Generate → Regenerate label after first press.
+- Stretch AI vibe layer still deferred.
+- Phase 8 (WRITEUP.md) not started.
+
+## 2026-06-14 — Deployment to GitHub Pages + site metadata
+
+**Focus:** Deploy FretFlow to GitHub Pages with a custom domain and tighten up all site metadata.
+
+**Decisions:**
+- **GitHub Pages over Vercel/Netlify** — free, straightforward for a static SPA. Project pages (`username.github.io/repo`) are unlimited; the one-per-account limit only applies to user pages.
+- **BrowserRouter kept as-is** — `/all-chords` is a dev-only diagnostic route; a 404 on the deployed site is acceptable. No `HashRouter` switch needed.
+- **No `base` path in `vite.config.ts`** — custom domain (`fretflow.ca`) serves the app at root `/`, so Vite's default `base: '/'` is correct.
+- **`gh-pages` npm package** — `predeploy` + `deploy` scripts push `dist/` to a `gh-pages` branch; GitHub Pages serves from that branch.
+- **`CNAME` in `public/`** — ensures the custom domain config survives every redeploy (Vite copies `public/` into `dist/` verbatim).
+- **Favicon:** replaced default Vite bolt with a walnut circle + brass dot SVG — matches the warm acoustic palette, readable at 16px.
+- **Apple touch icon:** generated 180×180 PNG from the favicon SVG using `sharp-cli` (no other conversion tool available on host).
+- **`og:image`:** Karl took a hero screenshot (`thumbnail.png`); moved to `public/` so it's included in the build.
+
+**Done:**
+- `package.json` — `gh-pages` added to devDependencies; `predeploy` + `deploy` scripts added.
+- `public/CNAME` — contains `fretflow.ca`.
+- `public/favicon.svg` — replaced Vite default with walnut + brass dot.
+- `public/apple-touch-icon.png` — 180×180 PNG generated from favicon SVG via `sharp-cli`.
+- `public/thumbnail.png` — hero screenshot moved from repo root into `public/`.
+- `index.html` — title (`FretFlow`), meta description, full OG block (type/url/title/description/image), `theme-color` (`#f4ede0`), apple-touch-icon link.
+- Deployed to `gh-pages` branch; GitHub Pages configured; DNS A records + CNAME verified.
+
+**Open threads:**
+- Phase 6 (save loops / localStorage) still not started.
+- UX polish: stale display on key/template change; Generate → Regenerate after first press.
+- Stretch AI vibe layer still deferred.
+- Phase 8 (WRITEUP.md) not started.

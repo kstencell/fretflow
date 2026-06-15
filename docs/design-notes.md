@@ -141,7 +141,8 @@ judgment calls.
 - **Phase 4 — UI: selectors + generate + progression list.** Wire to core. ✅ Full landing page complete: CAGED explainer (dark section, 5 shape cards), `KeySelector`, `ProgressionSelector` (mode-filtered), Generate button, chord + fretboard display (random shape per chord), footer. Font: Space Grotesk 700.
 - **Phase 5 — UI: SVG fretboard render.** Roots, chord tones, shape name, movement hint. ✅ `FretboardDiagram` wired into both the CAGED explainer and the dynamic progression display. `showLabel` prop added.
 - **Phase 5b — UI: full-neck diagram.** ✅ `FullNeckDiagram` replaces per-chord cards. Wood-toned SVG neck, all 4 chord shapes overlaid, active/inactive dot coloring (green + blue root ring / gray), chord selector buttons, responsive orientation (landscape ≥768px / portrait <768px via `useIsNarrow` hook).
-- **Phase 6 — save loops (localStorage).** Minimal.
+- **Deploy** ✅ GitHub Pages + custom domain `fretflow.ca`. `gh-pages` package, `CNAME` in `public/`, site metadata complete (favicon, OG tags, theme-color, apple-touch-icon).
+- **Phase 6 — save loops (localStorage).** Minimal. ← next
 - **Phase 7 (stretch) — AI vibe layer.** Schema-constrained Haiku call, whitelist
   validation, deterministic fallback, key entry.
 - **Phase 8 — WRITEUP.md.** Architecture, the trust boundary, and the honest
@@ -169,8 +170,7 @@ Each phase = a legible commit (or few). Keep history clean — it's graded evide
 
 ## 9. Still open
 
-- Deploy target (Vercel / Netlify / GH Pages / just `dev`) — decide near the end;
-  doesn't affect the build.
+- **Deploy target (locked 2026-06-14): GitHub Pages** — `gh-pages` branch, custom domain `fretflow.ca`. `CNAME` in `public/`. No `base` path needed (custom domain serves at root). BrowserRouter kept; `/all-chords` 404s on prod (acceptable — dev-only route).
 - **CAGED shape data verified ✅** — Karl completed the pass; shapes look correct. `VerificationPage` now lives at `/all-chords` as a permanent diagnostic tool.
 - **UI theme (redesigned 2026-06-12):** warm acoustic palette — cream `#f4ede0` background, walnut `#2d1a0e` dark sections, brass `#c4882a` accent. Fonts: Fraunces **700** display (logo/headings) + Lora serif body. Logo font trialled against Playfair Display, Cormorant Garamond, Yeseva One — Fraunces won; both hero h1 and footer wordmark now unified at weight 700 (down from 900).
 - **Hero background decoration (locked 2026-06-14):** abstract fretboard — 6 strings + fret lines + inlay dots, vertically centred. SVG `<linearGradient>` mask fades both edges (0→10% and 90→100%) so it dissolves cleanly on wide screens. Cream radial glow behind the text block ensures subheading readability; glow widens to `95%` on narrow screens via `isNarrow`. Inlay dots sit at inter-fret midpoints (3rd, 5th, 7th, 9th double). A full guitar silhouette (body + headstock) was attempted and rejected — SVG bezier curves without visual tooling produced unrecognisable shapes.

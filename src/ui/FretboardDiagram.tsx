@@ -5,7 +5,7 @@ const STRING_SPACING = 24;
 const NUT_X = 18;
 const PAD_RIGHT = 14;
 const PAD_TOP = 10;
-const PAD_BOTTOM = 20;
+const PAD_BOTTOM = 28;
 const DOT_R = 9;
 const NUT_W = 4;
 const FRETS_MIN = 4;
@@ -127,7 +127,7 @@ export function FretboardDiagram({ placedShape, showLabel = true }: Props) {
         {/* Fret number for non-open shapes */}
         {!showNut && (
           <text
-            x={NUT_X + 4} y={PAD_TOP + 5 * STRING_SPACING + 13}
+            x={NUT_X + 4} y={PAD_TOP + 5 * STRING_SPACING + DOT_R + 12}
             textAnchor="start" fill="#9a7a58" fontSize={9} fontFamily="monospace"
           >
             {displayStart}fr
