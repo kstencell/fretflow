@@ -262,7 +262,7 @@ export function HomePage() {
               fontWeight: 500,
             }}
           >
-            Guitar · Theory · Practice
+            A tool for guitarists.
           </p>
 
           <h1
@@ -343,20 +343,6 @@ export function HomePage() {
             }}
           >
             Start Practicing
-            <svg
-              width="13"
-              height="13"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              strokeWidth={2.5}
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M19 9l-7 7-7-7"
-              />
-            </svg>
           </a>
         </div>
 
