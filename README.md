@@ -12,6 +12,10 @@ Pick a key and a progression template. FretFlow realizes the diatonic chords, ma
 
 Works entirely offline. No account, no backend, no API key required.
 
+## AI usage
+
+Every token spent building this project is tracked by work category. See [`docs/ai-usage.md`](docs/ai-usage.md) for the full breakdown.
+
 ## Architecture
 
 The core design principle is a hard trust boundary:
@@ -70,4 +74,4 @@ A rough rule: if you've been in the same conversation for more than 20–30 back
 
 **Requires Python 3 on the host.** The token-tracking steps run two Python scripts (`mark.py`, `usage_report.py`). Claude Code runs on the host machine, not inside the devcontainer, so it can't use the devcontainer's Node environment — Python 3 must be installed separately. Without it, the journal entry and handoff prompt still work, but the usage statistics in `docs/ai-usage.md` will not be updated.
 
-Token usage across all sessions is tracked in [`docs/ai-usage.md`](docs/ai-usage.md), broken down by work category and updated automatically at each `/clean-up`.
+Token usage is updated automatically at each `/clean-up` — see the [AI usage](docs/ai-usage.md) doc for the running totals.
