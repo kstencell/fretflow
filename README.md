@@ -67,3 +67,5 @@ Run `/clean-up` at a natural stopping point: when a feature is done, before swit
 3. Keeps Claude's context lean so responses stay fast and accurate.
 
 A rough rule: if you've been in the same conversation for more than 20–30 back-and-forths, it's a good time to clean up. Don't wait until the window is nearly full — clean up while things are still going well.
+
+**Requires Python 3 on the host.** The token-tracking steps run two Python scripts (`mark.py`, `usage_report.py`). Claude Code runs on the host machine, not inside the devcontainer, so it can't use the devcontainer's Node environment — Python 3 must be installed separately. Without it, the journal entry and handoff prompt still work, but the usage statistics in `docs/ai-usage.md` will not be updated.
